@@ -16,7 +16,7 @@ public class StudentTest {
         this.student = new Student("Mateo", "mateo@gmail");
     }
 
-    @Test
+/*    @Test
     public void testParser() {
         String[] data = Student.parser("349,Economics,Sam Pink,sam.pink@email.com,Prof. Quincy");
 
@@ -25,5 +25,5 @@ public class StudentTest {
         assertEquals(data[2], "Sam Pink");
         assertEquals(data[3], "sam.pink@email.com");
         assertEquals(data[4], "Prof. Quincy");
-    }
+    }*/
 }

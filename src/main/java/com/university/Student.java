@@ -1,28 +1,49 @@
 package com.university;
 
-public class Student extends Person {
-    private Integer courseCount;
+import java.util.ArrayList;
+import java.util.List;
 
-    Student(String name, String email) {
-        super(name, email);
-        this.courseCount = 0;
+public class Student extends Person {
+    private String email;
+    private List<Course> courses;
+
+    public Student(String name, String email) {
+        super(name);
+        this.email = email;
+        this.courses = new ArrayList<Course>();
+    }
+
+    public Student(String[] studentData) {
+        super(studentData[2]);
+        this.email = studentData[3];
+        this.courses = new ArrayList<Course>();
     }
 
     // Getters
-    public Integer getCourseCount() { return courseCount; }
+    public Integer getCourseCount() {
+        int i = 0;
+        List<String> subjects = new ArrayList<String>();
+
+        for (Course c : this.courses) {
+            if (subjects.contains(c.getSubject())) continue;
+            subjects.add(c.getSubject());
+            i += 1;
+        }
+        return i;
+    }
+    public List<Course> getCourses() { return this.courses; }
+    public String getEmail() { return email; }
 
     // Setters
-    public void addCourse() { courseCount++; }
+    public void addCourse(Course course) { this.courses.add(course); }
+    public void setEmail(String email) { this.email = email; }
 
+    // Other
+
+    @Override
     public String toString() {
-        return String.format("%s, %d", super.getName(), this.getCourseCount());
+        return String.format("%s,%d", super.getName(), this.getCourseCount());
     }
-
-    // UnParsed Student
-    public static String[] parser(String unparsed) {
-        return unparsed.trim().split(",");
-    }
-
 
     @Override
     public boolean equals(Object o) {

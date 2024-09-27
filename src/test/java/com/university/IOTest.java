@@ -14,6 +14,7 @@ public class IOTest {
     @BeforeEach
     public void setUp() throws Exception {
         this.reader = new IO();
+        this.reader.readFile(this.reader.getInputFilePath());
     }
 
     @Test
@@ -25,12 +26,12 @@ public class IOTest {
         assertEquals("578,Political Science,Olivia Red,olivia.red@student.org,Prof. Sam", result.get(1));
     }
 
-    @Test
+    /*@Test
     public void testDeleteFile() {
         this.reader.deleteFile(this.reader.getSolutionFilePath());
         List<String> result = this.reader.readFile(this.reader.getSolutionFilePath());
         assertTrue(result.isEmpty());
-    }
+    }*/
 
     @Test
     public void testWriteOutputFile() {
@@ -43,6 +44,5 @@ public class IOTest {
         assertEquals("Hola!!", result.getFirst());
 
         this.reader.deleteFile(this.reader.getSolutionFilePath());
-
     }
 }

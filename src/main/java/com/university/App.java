@@ -9,21 +9,24 @@ public class App {
         System.out.println("Hello, World!");
 
         IO io = new IO();
+        University university = new University("Universidad Austral");
         io.deleteFile(io.getSolutionFilePath());
 
         List<String> result = io.readFile(io.getInputFilePath());
-        StudentManager studentManager = new StudentManager();
 
         result.removeFirst();
         for (String x : result) {
-            studentManager.addStudentUnparsed(x);
+            university.registerRow(x);
         }
 
         // Show results
         // studentManager.printStudentList();
 
-        List<String> studentList = studentManager.getStudentListAsString();
+        List<String> studentList = university.getStudentsAsString();
         studentList.addFirst("Student_Name,Course_Count");
+        //System.out.println(studentList.get(1));
         io.writeOutputList(studentList);
+
+        //Student x = university.getStudents().get(1);
     }
 }
