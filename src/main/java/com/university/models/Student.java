@@ -1,4 +1,6 @@
-package com.university;
+package com.university.models;
+
+import com.university.common.Person;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +12,6 @@ public class Student extends Person {
     public Student(String name, String email) {
         super(name);
         this.email = email;
-        this.courses = new ArrayList<Course>();
-    }
-
-    public Student(String[] studentData) {
-        super(studentData[2]);
-        this.email = studentData[3];
         this.courses = new ArrayList<Course>();
     }
 
@@ -31,12 +27,23 @@ public class Student extends Person {
         }
         return i;
     }
-    public List<Course> getCourses() { return this.courses; }
-    public String getEmail() { return email; }
+
+    public List<Course> getCourses() {
+        return this.courses;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 
     // Setters
-    public void addCourse(Course course) { this.courses.add(course); }
-    public void setEmail(String email) { this.email = email; }
+    public void addCourse(Course course) {
+        this.courses.add(course);
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     // Other
 
@@ -47,8 +54,12 @@ public class Student extends Person {
 
     @Override
     public boolean equals(Object o) {
-        if (o == this) { return true; }
-        if (!(o instanceof Student cStudent)) { return false; }
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Student cStudent)) {
+            return false;
+        }
         return this.getName().equals(cStudent.getName());
     }
 }

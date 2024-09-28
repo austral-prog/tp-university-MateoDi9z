@@ -1,6 +1,5 @@
-package com.university;
+package com.university.utils;
 
-import com.university.utils.IO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.List;

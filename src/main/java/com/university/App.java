@@ -1,5 +1,6 @@
 package com.university;
 
+import com.university.models.University;
 import com.university.utils.IO;
 
 import java.util.List;

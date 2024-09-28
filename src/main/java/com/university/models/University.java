@@ -1,8 +1,7 @@
-package com.university;
+package com.university.models;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class University {
@@ -32,6 +31,11 @@ public class University {
 
     public String getName() { return universityName; }
 
+    /**
+     * Receives a String containing register the Course that a Student has and
+     * creates instances if not exists.
+     * @param row
+     */
     public void registerRow(String row) {
         String[] data = row.split(",");
 
@@ -46,6 +50,10 @@ public class University {
         this.createStudentOrAddCourse(new Student(studentName, studentEmail), course);
     }
 
+    /**
+     * Returns a List of the students and courseCount in alphabetic order.
+     * @return List["Name,CourseCount"]
+     */
     public List<String> getStudentsAsString() {
         List<String> result = new ArrayList<>();
         for (Student student : this.students) {

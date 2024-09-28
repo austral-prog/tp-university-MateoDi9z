@@ -1,12 +1,9 @@
-package com.university;
+package com.university.models;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class StudentTest {
     private Student student;
@@ -14,6 +11,15 @@ public class StudentTest {
     @BeforeEach
     public void setUp() throws Exception {
         this.student = new Student("Mateo", "mateo@gmail");
+    }
+
+    @Test
+    public void testGetCourseCount() {
+        assertEquals(0, student.getCourseCount());
+        student.addCourse(new Course(1, "Prog", new Professor("Brunito")));
+        student.addCourse(new Course(2, "Prog", new Professor("Bauti")));
+        student.addCourse(new Course(3, "Futbol", new Professor("Brunito")));
+        assertEquals(2, student.getCourseCount());
     }
 
 /*    @Test

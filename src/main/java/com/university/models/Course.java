@@ -1,4 +1,4 @@
-package com.university;
+package com.university.models;
 
 public class Course {
     private Integer classroom;
