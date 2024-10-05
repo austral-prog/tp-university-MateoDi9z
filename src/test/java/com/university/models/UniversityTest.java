@@ -31,7 +31,7 @@ public class UniversityTest {
                 classroom = "562";
         String example = classroom+",Mathematics,"+studentName+",liam.magenta@email.com,"+profName;
 
-        this.university.registerRow(example);
+        this.university.registerRow1(example);
 
         assertEquals(1, university.getStudents().size());
         assertEquals(1, university.getProfessors().size());
@@ -45,9 +45,9 @@ public class UniversityTest {
     @Test
     public void testGetStudentsAsString() {
 
-        this.university.registerRow("438,Psychology,Paul Black,paul.black@email.com,Prof. Jack");
-        this.university.registerRow("288,Anthropology,Charlie Beige,charlie.beige@student.org,Prof. Rita");
-        this.university.registerRow("339,Economics,Bob Cyan,bob.cyan@student.org,Prof. Dana");
+        this.university.registerRow1("438,Psychology,Paul Black,paul.black@email.com,Prof. Jack");
+        this.university.registerRow1("288,Anthropology,Charlie Beige,charlie.beige@student.org,Prof. Rita");
+        this.university.registerRow1("339,Economics,Bob Cyan,bob.cyan@student.org,Prof. Dana");
 
         List<String> result = this.university.getStudentsAsString();
 

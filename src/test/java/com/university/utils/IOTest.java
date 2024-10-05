@@ -12,7 +12,7 @@ public class IOTest {
 
     @BeforeEach
     public void setUp() throws Exception {
-        this.reader = new IO();
+        this.reader = new IO(1);
         this.reader.readFile(this.reader.getInputFilePath());
     }
 
@@ -34,8 +34,6 @@ public class IOTest {
 
     @Test
     public void testWriteOutputFile() {
-        this.reader.deleteFile(this.reader.getSolutionFilePath());
-
         this.reader.writeOutput("Hola!!");
         List<String> result = this.reader.readFile(this.reader.getSolutionFilePath());
 

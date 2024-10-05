@@ -15,6 +15,12 @@ public class Student extends Person {
         this.courses = new ArrayList<Course>();
     }
 
+    public Student(String name) {
+        super(name);
+        this.email = "";
+        this.courses = new ArrayList<Course>();
+    }
+
     // Getters
     public Integer getCourseCount() {
         int i = 0;
@@ -38,6 +44,8 @@ public class Student extends Person {
 
     // Setters
     public void addCourse(Course course) {
+        int idx = courses.indexOf(course);
+        if (idx >= 0) return;
         this.courses.add(course);
     }
 

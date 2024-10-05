@@ -1,5 +1,7 @@
 package com.university;
 
+import com.university.utils.IO;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
@@ -12,6 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class AppTest {
+
+    @AfterAll
+    public static void cleanUp() {
+        IO.deleteFile("src/main/resources/solution.csv");
+    }
 
     @Test
     public void testSolutionCSVMatchesExpected() {

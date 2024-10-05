@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.university.models.Evaluation.EvaluationType;
+import static com.university.utils.Column.*;
+
 public class University {
     String universityName;
 
@@ -32,14 +35,17 @@ public class University {
     public String getName() { return universityName; }
 
     /**
-     * Receives a String containing register the Course that a Student has and
+     * (Classroom,Subject,Student_Name,Student_Email,Subject_Teacher)
+     * Receives a String containing a Course that a Student has and
      * creates instances if not exists.
      * @param row
      */
-    public void registerRow(String row) {
+    @Deprecated
+    public void registerRow1(String row) {
         String[] data = row.split(",");
 
         Integer classroom = Integer.parseInt(data[0]);
+
         String subject = data[1],
                 studentName = data[2],
                 studentEmail = data[3],
@@ -48,6 +54,32 @@ public class University {
         Professor professor = this.createProfessor(new Professor(professorName));
         Course course = this.createCourse(new Course(classroom, subject, professor));
         this.createStudentOrAddCourse(new Student(studentName, studentEmail), course);
+    }
+
+    /**
+     * (Student,Subject,Evaluation_Type,Evaluation_Name,Exercise_Name,Grade)
+     * Receives a String containing register the Course that a Student has and
+     * creates instances if not exists.
+     * @param row
+     */
+    public void registerRow2(String row) {
+        String[] data = row.split(",");
+
+        Student student = new Student(data[STUDENT.ordinal()]);
+        Course course = new Course(data[SUBJECT.ordinal()]);
+
+        this.createStudentOrAddCourse(student, course);
+
+        EvaluationType evaluationType = EvaluationType.valueOf(data[EVALUATION_TYPE.ordinal()]);
+
+        Evaluation evaluation = new Evaluation(
+                evaluationType,
+                data[EVALUATION_NAME.ordinal()],
+                data[EXERCISE_NAME.ordinal()],
+                Integer.parseInt(data[GRADE.ordinal()])
+        );
+
+        course.addEvaluation(evaluation);
     }
 
     /**
@@ -63,15 +95,31 @@ public class University {
         return result;
     }
 
+    public List<String> getGradesList() {
+        List<String> result = new ArrayList<>();
+
+        for (Student student : this.students) {
+            for (Course course : student.getCourses()) {
+                result.addAll(course.Serialize(student.getName()));
+            }
+        }
+        Collections.sort(result);
+        return result;
+    }
+
     // Methods
     public void createStudentOrAddCourse(Student student, Course course) {
         int idx = students.indexOf(student);
-        if (idx == -1) {
-            students.add(student);
-            idx = students.indexOf(student);
+
+        // Check if already exists
+        if (idx >= 0) {
             students.get(idx).addCourse(course);
+            return;
         }
-        else students.get(idx).addCourse(course);
+
+        students.add(student);                  // Add student to list
+        idx = students.indexOf(student);        // Get index
+        students.get(idx).addCourse(course);    // Add Course
     }
 
     public Professor createProfessor(Professor professor) {

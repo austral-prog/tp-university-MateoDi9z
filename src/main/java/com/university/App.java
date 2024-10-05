@@ -9,25 +9,44 @@ public class App {
     public static void main(String[] args) {
         System.out.println("Hello, World!");
 
-        IO io = new IO();
-        University university = new University("Universidad Austral");
-        io.deleteFile(io.getSolutionFilePath());
+        Submit1();
+    }
 
-        List<String> result = io.readFile(io.getInputFilePath());
+
+    @Deprecated
+    private static void Submit1() {
+        IO io = new IO(1);
+
+        University university = new University("Universidad Austral");
+
+        List<String> result = io.readInputFile();
 
         result.removeFirst();
         for (String x : result) {
-            university.registerRow(x);
+            university.registerRow1(x);
         }
-
-        // Show results
-        // studentManager.printStudentList();
 
         List<String> studentList = university.getStudentsAsString();
         studentList.addFirst("Student_Name,Course_Count");
-        //System.out.println(studentList.get(1));
-        io.writeOutputList(studentList);
 
-        //Student x = university.getStudents().get(1);
+        io.writeOutputList(studentList);
+    }
+
+    private static void Submit2() {
+        IO io = new IO(2);
+
+        University university = new University("Universidad Austral");
+
+        List<String> result = io.readInputFile();
+
+        result.removeFirst();
+        for (String x : result) {
+            university.registerRow2(x);
+        }
+
+        List<String> studentList = university.getGradesList();
+        studentList.addFirst("Subject_Name,Evaluation_Name,Student_Name,Grade");
+
+        io.writeOutputList(studentList);
     }
 }

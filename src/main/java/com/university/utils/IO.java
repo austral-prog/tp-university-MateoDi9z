@@ -9,13 +9,37 @@ import java.util.List;
 import java.io.File;
 
 public class IO {
-    private String solutionFilePath = "src/main/resources/solution.csv";
-    // private String expectedFilePath = "src/main/resources/expected.csv";
-    private String inputFilePath = "src/main/resources/input.csv";
+    public static final String solutionFilePath1 = "src/main/resources/solution.csv";
+    public static final String solutionFilePath2 = "src/main/resources/solution_2.csv";
+
+    public static final String inputFilePath1 = "src/main/resources/input.csv";
+    public static final String inputFilePath2 = "src/main/resources/input_2.csv";
+
+    // IN USE
+    private String actualSolutionFilepath = "";
+    private String actualInputFilepath = "";
+
+    public IO(Integer version) {
+        switch (version) {
+            case 1:
+                this.actualSolutionFilepath = solutionFilePath1;
+                this.actualInputFilepath = inputFilePath1;
+                break;
+            case 2:
+                this.actualSolutionFilepath = solutionFilePath2;
+                this.actualInputFilepath = inputFilePath2;
+                break;
+        }
+
+        deleteFile(this.getSolutionFilePath());
+    }
 
     // Getters
-    public String getSolutionFilePath() { return this.solutionFilePath; }
-    public String getInputFilePath() { return this.inputFilePath; }
+    public String getSolutionFilePath() { return actualSolutionFilepath; }
+    public String getInputFilePath() { return actualInputFilepath; }
+
+    // Pre-made
+    public List<String> readInputFile() { return readFile(this.actualInputFilepath); }
 
     /**
      * Reads a CSV file and returns a List of strings
@@ -24,7 +48,7 @@ public class IO {
     public List<String> readFile(String filePath) {
         try (BufferedReader InputReader = new BufferedReader(new FileReader(filePath))) {
             String inputLine;
-            List<String> inputList = new ArrayList<String>();
+            List<String> inputList = new ArrayList<>();
 
             while ((inputLine = InputReader.readLine()) != null) {
                 inputList.add(inputLine);
@@ -40,31 +64,29 @@ public class IO {
     /**
      * Creates Output ("solution.csv") file.
      */
-    public File createOutputFile() {
+    public void createOutputFile() {
         try {
-            File solutionFile = new File(solutionFilePath);
+            File solutionFile = new File(actualSolutionFilepath);
 
             if (solutionFile.createNewFile()) {
                 System.out.println("File created: " + solutionFile.getName());
             } else {
                 System.out.println("File already exists.");
             }
-            return solutionFile;
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
-            return null;
         }
     }
 
     /**
      * Writes a String as a single line in the output file
-     * @param output
+     * @param output Output String
      */
     public void writeOutput(String output) {
         try {
             this.createOutputFile();
-            FileWriter writer = new FileWriter(solutionFilePath);
+            FileWriter writer = new FileWriter(actualSolutionFilepath);
 
             writer.write(output + "\n");
 
@@ -76,12 +98,12 @@ public class IO {
 
     /**
      * Writes a list of Strings as multiple lines in the output file
-     * @param outputList
+     * @param outputList Output String List
      */
     public void writeOutputList(List<String> outputList) {
         try {
             this.createOutputFile();
-            FileWriter writer = new FileWriter(solutionFilePath);
+            FileWriter writer = new FileWriter(actualSolutionFilepath);
 
             for (String outputLine : outputList) {
                 writer.write(outputLine + "\n");
@@ -95,9 +117,9 @@ public class IO {
 
     /**
      * Delete a file from a specified filepath
-     * @param filePath
+     * @param filePath File Path
      */
-    public void deleteFile(String filePath) {
+    public static void deleteFile(String filePath) {
         File myObj = new File(filePath);
 
         if (myObj.delete()) {
