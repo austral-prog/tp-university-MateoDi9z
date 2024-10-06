@@ -22,6 +22,7 @@ public class Course {
         this.classroom = classroom;
         this.subject = subject;
         this.professor = professor;
+        this.evaluations = new ArrayList<Evaluation>();
     }
 
     // Getters
@@ -30,9 +31,14 @@ public class Course {
     public Professor getProfessor() { return professor; }
     public List<Evaluation> getEvaluations() { return evaluations; }
 
+    // Setters
+    public void setClassroom(Integer classroom) { this.classroom = classroom; }
+    public void setClassroom(String classroom) { this.classroom = Integer.parseInt(classroom); }
+    public void setSubject(String subject) { this.subject = subject; }
     public void addEvaluation(Evaluation evaluation) {
         evaluations.add(evaluation);
     }
+    public void setProfessor(Professor professor) { this.professor = professor; }
 
     public List<String> Serialize(String studentName) {
         List<String> result = new ArrayList<>();
