@@ -1,11 +1,14 @@
 package com.university.models;
 
+import com.university.models.Course.Course;
+import com.university.models.Course.Evaluation;
+import com.university.models.Course.Exercise;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static com.university.models.Evaluation.EvaluationType.FINAL_PRACTICAL_WORK;
+import static com.university.models.Course.Evaluation.EvaluationType.FINAL_PRACTICAL_WORK;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CourseTest {
@@ -14,8 +17,8 @@ public class CourseTest {
 
     @BeforeEach
     public void setUp() throws Exception {
-        this.course = new Course("Math");
-        this.fullCourse = new Course(5, "Excel", new Professor("Bruno"));
+        this.course = new Course("Math", new Student("Mateo"));
+        this.fullCourse = new Course(5, "Excel", new Student("Mateo"), new Professor("Bruno"));
     }
 
     @Test
@@ -54,7 +57,8 @@ public class CourseTest {
     public void testSetGetEvaluations() {
         assertEquals(new ArrayList<>(), course.getEvaluations());
         assertEquals(new ArrayList<>(), fullCourse.getEvaluations());
-        Evaluation evaluation = new Evaluation(FINAL_PRACTICAL_WORK, "Tp 2", "ej 1", 7);
+        Evaluation evaluation = new Evaluation(FINAL_PRACTICAL_WORK, "Tp 2");
+        evaluation.addExercise(new Exercise("ej 1", 7));
         course.addEvaluation(evaluation);
         fullCourse.addEvaluation(evaluation);
         assertEquals(1, course.getEvaluations().size());
@@ -63,12 +67,12 @@ public class CourseTest {
 
     @Test
     public void testEquals() {
-        Course course1 = new Course("Math II");
-        assertFalse(course.equals(fullCourse));
+        // Course course1 = new Course("Math II");
+        assertNotEquals(course, fullCourse);
         this.course.setSubject("Math");
         this.fullCourse.setSubject("Math");
-        assertTrue(course.equals(course));
-        assertFalse(course.equals(new Object()));
-        assertTrue(course.equals(fullCourse));
+        assertEquals(course, course);
+        assertNotEquals(course, new Object());
+        assertEquals(course, fullCourse);
     }
 }

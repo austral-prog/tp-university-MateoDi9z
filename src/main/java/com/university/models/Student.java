@@ -1,13 +1,15 @@
 package com.university.models;
 
 import com.university.common.Person;
+import com.university.models.Course.Course;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Student extends Person {
     private String email;
-    private List<Course> courses;
+    private final List<Course> courses;
 
     public Student(String name, String email) {
         super(name);

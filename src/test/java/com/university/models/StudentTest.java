@@ -1,7 +1,7 @@
 package com.university.models;
 
+import com.university.models.Course.Course;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,16 +18,16 @@ public class StudentTest {
     @Test
     public void testAddGetCourses() {
         assertEquals(0, student.getCourseCount());
-        student.addCourse(new Course(1, "Prog", new Professor("Brunito")));
-        student.addCourse(new Course(2, "Prog", new Professor("Bauti")));
-        student.addCourse(new Course(3, "Futbol", new Professor("Brunito")));
+        student.addCourse(new Course(1, "Prog", student, new Professor("Brunito")));
+        student.addCourse(new Course(2, "Prog", student, new Professor("Bauti")));
+        student.addCourse(new Course(3, "Futbol", student, new Professor("Brunito")));
         assertEquals(2, student.getCourseCount());
     }
 
     @Test
     public void testGetters() {
         assertEquals(0, student.getCourseCount());
-        student.addCourse(new Course(4, "Futbol", new Professor("Brunito")));
+        student.addCourse(new Course(4, "Futbol", student, new Professor("Brunito")));
         assertEquals("mateo@gmail", student.getEmail());
         assertEquals(1, student.getCourses().size());
     }
@@ -42,7 +42,7 @@ public class StudentTest {
     @Test
     public void testToString() {
         assertEquals("Mateo,0", student.toString());
-        this.student.addCourse(new Course(1, "Prog", new Professor("Brunito")));
+        this.student.addCourse(new Course(1, "Prog", student, new Professor("Brunito")));
         assertEquals("Mateo,1", student.toString());
     }
 

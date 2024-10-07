@@ -4,12 +4,20 @@ import com.university.models.University;
 import com.university.utils.IO;
 
 import java.util.List;
+import java.util.Objects;
 
 public class App {
     public static void main(String[] args) {
-        System.out.println("Hello, World!");
+        if (args.length == 0) {
+            System.out.println("No arguments given");
+            Submit1();
+            return;
+        }
 
-        Submit1();
+        System.out.printf("Found argument: %s%n", args[0]);
+
+        if (Objects.equals(args[0], "1")) Submit1();
+        if (Objects.equals(args[0], "2")) Submit2();
     }
 
 

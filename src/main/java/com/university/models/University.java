@@ -1,10 +1,15 @@
 package com.university.models;
 
+import com.university.models.Course.Course;
+import com.university.models.Course.Evaluation;
+import com.university.models.Course.Exercise;
+import com.university.utils.Row2;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static com.university.models.Evaluation.EvaluationType;
+import static com.university.models.Course.Evaluation.EvaluationType;
 import static com.university.utils.Column.*;
 
 public class University {
@@ -24,7 +29,7 @@ public class University {
         System.out.println(" -> Created University named: " + universityName);
     }
 
-    // Getters
+    // ---------- Getters ----------
     public List<Student> getStudents() {
         students.sort((a, b) -> a.getName().compareToIgnoreCase(b.getName()));
         return students;
@@ -33,6 +38,45 @@ public class University {
     public List<Professor> getProfessors() { return professors; }
 
     public String getName() { return universityName; }
+
+    // ---------- Finders ----------
+    public Student getStudent(String name) {
+        for (Student student : students) {
+            if (student.getName().equals(name)) {
+                return student;
+            }
+        }
+        return null;
+    }
+
+    public Course getCourse(String subject, Student student) {
+        for (Course course : courses) {
+            if (course.equals(new Course(subject, student))) {
+                return course;
+            }
+        }
+        return null;
+    }
+
+    // ---------- Creators ----------
+    private Student addStudent(String studentName) {
+        Student student = getStudent(studentName);
+        if (student == null) {
+            student = new Student(studentName);
+            students.add(student);
+        }
+        return student;
+    }
+
+    private Course addCourse(String subject, Student student) {
+        Course course = getCourse(subject, student);
+        if (course == null) {
+            course = new Course(subject, student);
+            courses.add(course);
+            student.addCourse(course);
+        }
+        return course;
+    }
 
     /**
      * (Classroom,Subject,Student_Name,Student_Email,Subject_Teacher)
@@ -51,9 +95,10 @@ public class University {
                 studentEmail = data[3],
                 professorName = data[4];
 
+        Student student = new Student(studentName, studentEmail);
         Professor professor = this.createProfessor(new Professor(professorName));
-        Course course = this.createCourse(new Course(classroom, subject, professor));
-        this.createStudentOrAddCourse(new Student(studentName, studentEmail), course);
+        Course course = this.createCourse(new Course(classroom, subject, student, professor));
+        this.createStudentOrAddCourse(student, course);
     }
 
     /**
@@ -63,21 +108,27 @@ public class University {
      * @param row
      */
     public void registerRow2(String row) {
-        String[] data = row.split(",");
+        Row2 data = new Row2(row);
 
-        Student student = new Student(data[STUDENT.ordinal()]);
-        Course course = new Course(data[SUBJECT.ordinal()]);
+        Student student = addStudent(data.studentName);
+        Course course = addCourse(data.subject, student);
 
-        this.createStudentOrAddCourse(student, course);
+        EvaluationType evaluationType = data.getEvaluationType();
 
-        EvaluationType evaluationType = EvaluationType.valueOf(data[EVALUATION_TYPE.ordinal()]);
+        boolean found = false;
+        Evaluation evaluation = new Evaluation(evaluationType, data.evaluationName);
+        for (Evaluation e : course.getEvaluations()) {
+            if (e.getName().equals(data.evaluationName) && course.getSubject().equals(data.subject)) {
+                evaluation = e;
+                found = true;
+            }
+        }
 
-        Evaluation evaluation = new Evaluation(
-                evaluationType,
-                data[EVALUATION_NAME.ordinal()],
-                data[EXERCISE_NAME.ordinal()],
-                Integer.parseInt(data[GRADE.ordinal()])
+        evaluation.addExercise(
+                new Exercise(data.exerciseName, data.grade)
         );
+
+        if (found) return;
 
         course.addEvaluation(evaluation);
     }
@@ -103,23 +154,26 @@ public class University {
                 result.addAll(course.Serialize(student.getName()));
             }
         }
-        Collections.sort(result);
+
+        // Collections.sort(result);
         return result;
     }
 
     // Methods
-    public void createStudentOrAddCourse(Student student, Course course) {
+    public Student createStudentOrAddCourse(Student student, Course course) {
         int idx = students.indexOf(student);
 
         // Check if already exists
         if (idx >= 0) {
             students.get(idx).addCourse(course);
-            return;
+            return students.get(idx);
         }
 
         students.add(student);                  // Add student to list
         idx = students.indexOf(student);        // Get index
         students.get(idx).addCourse(course);    // Add Course
+
+        return students.get(idx);
     }
 
     public Professor createProfessor(Professor professor) {
