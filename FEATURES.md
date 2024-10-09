@@ -6,8 +6,12 @@
 University
     └── Studends <────── Person
     └── Professors <──── Person
-        └── Courses
+    └── Courses
+        └── Evaluations
+        └── Exercises
                
 Utils
     └── IO
+    └── Row2 (Parser)
+    └── Column enum
 ```

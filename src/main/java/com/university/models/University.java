@@ -155,7 +155,7 @@ public class University {
             }
         }
 
-        // Collections.sort(result);
+        Collections.sort(result);
         return result;
     }
 
