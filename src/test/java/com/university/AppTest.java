@@ -10,10 +10,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AppTest {
-
     @AfterAll
     @BeforeAll
     public static void cleanUp() {
@@ -32,7 +32,7 @@ public class AppTest {
         }
 
         try {
-            App.main(new String[]{"1"});  // Running the App's main method
+            App.main(new String[] { "1" }); // Running the App's main method
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to execute App.main()");
@@ -45,16 +45,16 @@ public class AppTest {
 
         // Proceed to compare the solution.csv with expected.csv
         try (BufferedReader solutionReader = new BufferedReader(new FileReader(solutionFilePath));
-             BufferedReader expectedReader = new BufferedReader(new FileReader(expectedFilePath))) {
+                BufferedReader expectedReader = new BufferedReader(new FileReader(expectedFilePath))) {
 
             String solutionLine;
             String expectedLine;
 
-            while ((solutionLine = solutionReader.readLine()) != null && 
-                   (expectedLine = expectedReader.readLine()) != null) {
+            while ((solutionLine = solutionReader.readLine()) != null &&
+                    (expectedLine = expectedReader.readLine()) != null) {
                 assertEquals(expectedLine, solutionLine, "Mismatch found in the CSV file content.");
             }
-            
+
             // Ensure both files have the same number of lines
             assertEquals(solutionReader.readLine(), expectedReader.readLine(), "Files have different number of lines.");
 
@@ -77,7 +77,7 @@ public class AppTest {
         }
 
         try {
-            App.main(new String[]{"2"});  // Running the App's main method
+            App.main(new String[] { "2" }); // Running the App's main method
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to execute App.main()");
@@ -90,7 +90,7 @@ public class AppTest {
 
         // Proceed to compare the solution.csv with expected.csv
         try (BufferedReader solutionReader = new BufferedReader(new FileReader(solutionFilePath));
-             BufferedReader expectedReader = new BufferedReader(new FileReader(expectedFilePath))) {
+                BufferedReader expectedReader = new BufferedReader(new FileReader(expectedFilePath))) {
 
             String solutionLine;
             String expectedLine;
@@ -110,9 +110,9 @@ public class AppTest {
     }
 
     /**
-        Este test checkea que los .csv sean IGUALS pero sin tener
-        en cuenta el orden de estos, buscando linea a linea la
-        existencia de esta en el otro archivo.
+     * Este test checkea que los .csv sean IGUALS pero sin tener
+     * en cuenta el orden de estos, buscando linea a linea la
+     * existencia de esta en el otro archivo.
      */
     @Test
     @Disabled
@@ -127,7 +127,7 @@ public class AppTest {
         }
 
         try {
-            App.main(new String[]{"2"});  // Running the App's main method
+            App.main(new String[] { "2" }); // Running the App's main method
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to execute App.main()");
@@ -140,7 +140,7 @@ public class AppTest {
 
         // Proceed to compare the solution.csv with expected.csv
         try (BufferedReader expectedReader = new BufferedReader(new FileReader(expectedFilePath));
-             BufferedReader sr = new BufferedReader(new FileReader(solutionFilePath));) {
+                BufferedReader sr = new BufferedReader(new FileReader(solutionFilePath));) {
             String solutionLine;
             String expectedLine;
 
