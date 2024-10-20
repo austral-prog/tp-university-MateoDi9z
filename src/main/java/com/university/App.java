@@ -52,6 +52,8 @@ public class App {
             university.registerRow2(x);
         }
 
+        io = new IO(3);
+
         List<String> studentList = university.getGradesList();
         studentList.addFirst("Subject_Name,Evaluation_Name,Student_Name,Grade");
 

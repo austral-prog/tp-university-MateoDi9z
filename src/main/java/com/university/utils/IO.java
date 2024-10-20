@@ -8,38 +8,40 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.File;
 
-public class IO {
-    public static final String solutionFilePath1 = "src/main/resources/solution.csv";
-    public static final String solutionFilePath2 = "src/main/resources/solution_2.csv";
 
-    public static final String inputFilePath1 = "src/main/resources/input.csv";
-    public static final String inputFilePath2 = "src/main/resources/input_2.csv";
+public class IO {
+    private final List<String> solutionFiles = List.of(
+            "src/main/resources/solution.csv",
+            "src/main/resources/solution_2.csv",
+            "src/main/resources/solution_3.csv"
+    );
+    private final List<String> inputFiles = List.of(
+            "src/main/resources/input.csv",
+            "src/main/resources/input_2.csv",
+            "src/main/resources/input_3.csv"
+    );
 
     // IN USE
-    private String actualSolutionFilepath = "";
-    private String actualInputFilepath = "";
+    private Integer actualSolutionFilepathIdx = 0;
+    private Integer actualInputFilepathIdx = 0;
 
     public IO(Integer version) {
-        switch (version) {
-            case 1:
-                this.actualSolutionFilepath = solutionFilePath1;
-                this.actualInputFilepath = inputFilePath1;
-                break;
-            case 2:
-                this.actualSolutionFilepath = solutionFilePath2;
-                this.actualInputFilepath = inputFilePath2;
-                break;
-        }
-
+        setFiles(version);
         deleteFile(this.getSolutionFilePath());
     }
 
     // Getters
-    public String getSolutionFilePath() { return actualSolutionFilepath; }
-    public String getInputFilePath() { return actualInputFilepath; }
+    public String getSolutionFilePath() { return solutionFiles.get(actualSolutionFilepathIdx); }
+    public String getInputFilePath() { return inputFiles.get(actualInputFilepathIdx); }
 
     // Pre-made
-    public List<String> readInputFile() { return readFile(this.actualInputFilepath); }
+    public List<String> readInputFile() { return readFile(this.inputFiles.get(actualInputFilepathIdx)); }
+
+    public void setFiles(Integer version) {
+        if (version < 0 || version > 3) return;
+        this.actualSolutionFilepathIdx = version;
+        this.actualInputFilepathIdx = version;
+    }
 
     /**
      * Reads a CSV file and returns a List of strings
@@ -66,7 +68,7 @@ public class IO {
      */
     public void createOutputFile() {
         try {
-            File solutionFile = new File(actualSolutionFilepath);
+            File solutionFile = new File(this.getSolutionFilePath());
 
             if (solutionFile.createNewFile()) {
                 System.out.println("File created: " + solutionFile.getName());
@@ -86,7 +88,7 @@ public class IO {
     public void writeOutput(String output) {
         try {
             this.createOutputFile();
-            FileWriter writer = new FileWriter(actualSolutionFilepath);
+            FileWriter writer = new FileWriter(this.getSolutionFilePath());
 
             writer.write(output + "\n");
 
@@ -103,7 +105,7 @@ public class IO {
     public void writeOutputList(List<String> outputList) {
         try {
             this.createOutputFile();
-            FileWriter writer = new FileWriter(actualSolutionFilepath);
+            FileWriter writer = new FileWriter(this.getSolutionFilePath());
 
             for (String outputLine : outputList) {
                 writer.write(outputLine + "\n");
