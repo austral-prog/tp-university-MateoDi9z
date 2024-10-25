@@ -1,6 +1,6 @@
 package com.university.utils;
 
-import com.university.models.Course.Evaluation.EvaluationType;
+import com.university.models.Course.Evaluation.Evaluation.EvaluationType;
 
 import static com.university.utils.Column.*;
 

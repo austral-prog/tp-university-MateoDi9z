@@ -5,9 +5,10 @@ import java.util.List;
 
 import com.university.models.Course.*;
 
+import com.university.models.Course.Evaluation.Evaluation;
 import org.junit.jupiter.api.*;
 
-import static com.university.models.Course.Evaluation.EvaluationType.WRITTEN_EXAM;
+import static com.university.models.Course.Evaluation.Evaluation.EvaluationType.WRITTEN_EXAM;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UniversityTest {

@@ -4,7 +4,6 @@ import com.university.common.Person;
 import com.university.models.Course.Course;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class Student extends Person {
@@ -14,19 +13,19 @@ public class Student extends Person {
     public Student(String name, String email) {
         super(name);
         this.email = email;
-        this.courses = new ArrayList<Course>();
+        this.courses = new ArrayList<>();
     }
 
     public Student(String name) {
         super(name);
         this.email = "";
-        this.courses = new ArrayList<Course>();
+        this.courses = new ArrayList<>();
     }
 
     // Getters
     public Integer getCourseCount() {
         int i = 0;
-        List<String> subjects = new ArrayList<String>();
+        List<String> subjects = new ArrayList<>();
 
         for (Course c : this.courses) {
             if (subjects.contains(c.getSubject())) continue;

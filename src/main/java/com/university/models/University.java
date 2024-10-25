@@ -1,7 +1,7 @@
 package com.university.models;
 
 import com.university.models.Course.Course;
-import com.university.models.Course.Evaluation;
+import com.university.models.Course.Evaluation.*;
 import com.university.models.Course.Exercise;
 import com.university.utils.Row2;
 
@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static com.university.models.Course.Evaluation.EvaluationType;
-import static com.university.utils.Column.*;
+import static com.university.models.Course.Evaluation.Evaluation.EvaluationType;
 
 public class University {
     String universityName;
@@ -22,9 +21,9 @@ public class University {
     public University(String name) {
         this.universityName = name;
 
-        this.students = new ArrayList<Student>();
-        this.courses = new ArrayList<Course>();
-        this.professors = new ArrayList<Professor>();
+        this.students = new ArrayList<>();
+        this.courses = new ArrayList<>();
+        this.professors = new ArrayList<>();
 
         System.out.println(" -> Created University named: " + universityName);
     }
@@ -82,7 +81,7 @@ public class University {
      * (Classroom,Subject,Student_Name,Student_Email,Subject_Teacher)
      * Receives a String containing a Course that a Student has and
      * creates instances if not exists.
-     * @param row
+     * @param row String with data
      */
     @Deprecated
     public void registerRow1(String row) {
@@ -105,7 +104,7 @@ public class University {
      * (Student,Subject,Evaluation_Type,Evaluation_Name,Exercise_Name,Grade)
      * Receives a String containing register the Course that a Student has and
      * creates instances if not exists.
-     * @param row
+     * @param row String with data
      */
     public void registerRow2(String row) {
         Row2 data = new Row2(row);
@@ -115,21 +114,33 @@ public class University {
 
         EvaluationType evaluationType = data.getEvaluationType();
 
+        String evaluationName = data.evaluationName;
+        String subject = data.subject;
+
         boolean found = false;
-        Evaluation evaluation = new Evaluation(evaluationType, data.evaluationName);
-        for (Evaluation e : course.getEvaluations()) {
-            if (e.getName().equals(data.evaluationName) && course.getSubject().equals(data.subject)) {
-                evaluation = e;
-                found = true;
+        Evaluation evaluation;
+
+        switch (evaluationType) {
+            case ORAL_EXAM -> evaluation = new OralExam(evaluationName);
+            case FINAL_PRACTICAL_WORK -> evaluation = new FinalPracticalWork(evaluationName);
+            case PRACTICAL_WORK -> evaluation = new PracticalWork(evaluationName);
+            case WRITTEN_EXAM -> evaluation = new WrittenExam(evaluationName);
+            default -> {
+                return;
             }
         }
 
-        evaluation.addExercise(
-                new Exercise(data.exerciseName, data.grade)
-        );
+        for (Evaluation e : course.getEvaluations()) {
+            if (e.equals(evaluation) && course.getSubject().equals(subject)) {
+                evaluation = e;
+                found = true;
+                break;
+            }
+        }
+
+        evaluation.addExercise(new Exercise(data.exerciseName, data.grade));
 
         if (found) return;
-
         course.addEvaluation(evaluation);
     }
 

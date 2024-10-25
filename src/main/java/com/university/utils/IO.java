@@ -1,12 +1,8 @@
 package com.university.utils;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.File;
 
 
 public class IO {
@@ -58,7 +54,7 @@ public class IO {
 
             return inputList;
         } catch (IOException e) {
-            e.printStackTrace();
+            printError(e);
             return null;
         }
     }
@@ -77,7 +73,7 @@ public class IO {
             }
         } catch (IOException e) {
             System.out.println("An error occurred.");
-            e.printStackTrace();
+            printError(e);
         }
     }
 
@@ -130,4 +126,6 @@ public class IO {
             System.out.println("Failed to delete the file.");
         }
     }
+
+    private void printError(IOException e) { System.out.println(e.getMessage()); }
 }

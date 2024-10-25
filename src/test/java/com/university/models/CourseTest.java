@@ -1,14 +1,14 @@
 package com.university.models;
 
 import com.university.models.Course.Course;
-import com.university.models.Course.Evaluation;
+import com.university.models.Course.Evaluation.Evaluation;
 import com.university.models.Course.Exercise;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static com.university.models.Course.Evaluation.EvaluationType.FINAL_PRACTICAL_WORK;
+import static com.university.models.Course.Evaluation.Evaluation.EvaluationType.FINAL_PRACTICAL_WORK;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CourseTest {

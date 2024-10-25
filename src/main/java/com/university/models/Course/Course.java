@@ -1,12 +1,11 @@
 package com.university.models.Course;
 
+import com.university.models.Course.Evaluation.Evaluation;
 import com.university.models.Professor;
 import com.university.models.Student;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Course {
     private Integer classroom;
@@ -20,7 +19,7 @@ public class Course {
         this.classroom = null;
         this.professor = null;
         this.student = student;
-        this.evaluations = new ArrayList<Evaluation>();
+        this.evaluations = new ArrayList<>();
     }
 
     public Course(Integer classroom, String subject, Student student, Professor professor) {
@@ -28,7 +27,7 @@ public class Course {
         this.subject = subject;
         this.professor = professor;
         this.student = student;
-        this.evaluations = new ArrayList<Evaluation>();
+        this.evaluations = new ArrayList<>();
     }
 
     // Getters
@@ -51,7 +50,7 @@ public class Course {
         List<String> result = new ArrayList<>();
 
         for (Evaluation evaluation : evaluations) {
-            result.add(String.format("%s,%s,%s,%.1f", this.subject, evaluation.getName(), studentName, evaluation.getAverageGrade()));
+            result.add(String.format("%s,%s,%s,%.1f", this.subject, evaluation.getName(), studentName, evaluation.getGrate()));
         }
 
         return result;
