@@ -1,8 +1,8 @@
-package com.university.Models.Course;
+package com.university.models.Course;
 
-import com.university.Models.Course.Evaluation.Evaluation;
-import com.university.Models.Professor;
-import com.university.Models.Student;
+import com.university.models.Course.Evaluation.Evaluation;
+import com.university.models.Professor;
+import com.university.models.Student;
 
 import java.util.ArrayList;
 import java.util.List;

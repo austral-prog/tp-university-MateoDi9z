@@ -1,6 +1,6 @@
-package com.university.Models.Course.Evaluation;
+package com.university.models.Course.Evaluation;
 
-import com.university.Models.Course.Exercise;
+import com.university.models.Course.Exercise;
 
 import java.util.List;
 

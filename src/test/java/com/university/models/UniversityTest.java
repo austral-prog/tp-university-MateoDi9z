@@ -1,13 +1,13 @@
-package com.university.Models;
+package com.university.models;
 
 import java.util.ArrayList;
 import java.util.List;
 
 // Models
-import com.university.Models.Course.*;
-import com.university.Models.Course.Evaluation.Evaluation;
+import com.university.models.Course.*;
+import com.university.models.Course.Evaluation.Evaluation;
 
-import static com.university.Models.Course.Evaluation.Evaluation.EvaluationType.FINAL_PRACTICAL_WORK;
+import static com.university.models.Course.Evaluation.Evaluation.EvaluationType.FINAL_PRACTICAL_WORK;
 
 // Testing
 import org.junit.jupiter.api.BeforeEach;

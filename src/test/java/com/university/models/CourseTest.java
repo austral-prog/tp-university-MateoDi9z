@@ -1,9 +1,9 @@
-package com.university.Models;
+package com.university.models;
 
-import com.university.Models.Course.Course;
-import com.university.Models.Course.Evaluation.Evaluation;
-import com.university.Models.Course.Evaluation.FinalPracticalWork;
-import com.university.Models.Course.Exercise;
+import com.university.models.Course.Course;
+import com.university.models.Course.Evaluation.Evaluation;
+import com.university.models.Course.Evaluation.FinalPracticalWork;
+import com.university.models.Course.Exercise;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

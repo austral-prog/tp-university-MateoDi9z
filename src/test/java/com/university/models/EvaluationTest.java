@@ -1,15 +1,15 @@
-package com.university.Models;
+package com.university.models;
 
-import com.university.Models.Course.Evaluation.Evaluation;
-import com.university.Models.Course.Evaluation.WrittenExam;
-import com.university.Models.Course.Exercise;
+import com.university.models.Course.Evaluation.Evaluation;
+import com.university.models.Course.Evaluation.WrittenExam;
+import com.university.models.Course.Exercise;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static com.university.Models.Course.Evaluation.Evaluation.EvaluationType.*;
+import static com.university.models.Course.Evaluation.Evaluation.EvaluationType.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class EvaluationTest {

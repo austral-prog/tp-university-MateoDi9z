@@ -1,8 +1,8 @@
-package com.university.Models;
+package com.university.models;
 
 import com.university.Entity;
-import com.university.Common.Person;
-import com.university.Models.Course.Course;
+import com.university.common.Person;
+import com.university.models.Course.Course;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.university.utils;
 
-import com.university.Models.Course.Course;
-import com.university.Models.Course.Exercise;
-import com.university.Models.Student;
+import com.university.models.Course.Course;
+import com.university.models.Course.Exercise;
+import com.university.models.Student;
 
 import java.util.List;
 

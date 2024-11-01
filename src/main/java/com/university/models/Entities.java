@@ -1,4 +1,4 @@
-package com.university.Models;
+package com.university.models;
 
 public enum Entities {
     Student,

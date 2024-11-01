@@ -1,12 +1,17 @@
-package com.university.Controllers;
+package com.university.controllers;
 
 import com.university.CRUDRepository;
-import com.university.Models.Student;
+import com.university.models.Student;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StudentController implements CRUDRepository<Student> {
-    private static List<Student> students;
+    private final List<Student> students;
+
+    public StudentController() {
+        this.students = new ArrayList<>();
+    }
 
     /**
      * @param entity the entity to be created

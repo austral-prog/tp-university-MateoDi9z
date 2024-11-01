@@ -1,4 +1,4 @@
-package com.university.Common;
+package com.university.common;
 
 public abstract class Person {
     private String name;

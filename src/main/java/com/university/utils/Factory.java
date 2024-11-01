@@ -2,8 +2,8 @@ package com.university.utils;
 
 import com.university.CRUDRepository;
 import com.university.Entity;
-import com.university.Models.Entities;
-import com.university.Models.Student;
+import com.university.models.Entities;
+import com.university.models.Student;
 
 import java.util.List;
 

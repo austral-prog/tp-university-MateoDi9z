@@ -1,4 +1,4 @@
-package com.university.Models.Course.Evaluation;
+package com.university.models.Course.Evaluation;
 
 import java.util.ArrayList;
 

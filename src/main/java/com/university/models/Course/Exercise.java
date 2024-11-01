@@ -1,4 +1,4 @@
-package com.university.Models.Course;
+package com.university.models.Course;
 
 import com.university.Entity;
 
