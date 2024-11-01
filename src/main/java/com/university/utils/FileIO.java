@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class IO {
+public class FileIO {
     private final List<String> solutionFiles = List.of(
             "src/main/resources/solution.csv",
             "src/main/resources/solution_2.csv",
@@ -21,7 +21,7 @@ public class IO {
     private Integer actualSolutionFilepathIdx = 0;
     private Integer actualInputFilepathIdx = 0;
 
-    public IO(Integer version) {
+    public FileIO(Integer version) {
         setFiles(version - 1);
         deleteFile(this.getSolutionFilePath());
     }

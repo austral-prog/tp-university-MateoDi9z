@@ -1,6 +1,6 @@
 package com.university;
 
-import com.university.utils.IO;
+import com.university.utils.FileIO;
 import org.junit.jupiter.api.*;
 
 import java.io.BufferedReader;
@@ -17,8 +17,8 @@ public class AppTest {
     @AfterAll
     @BeforeAll
     public static void cleanUp() {
-        IO.deleteFile("src/main/resources/solution.csv");
-        IO.deleteFile("src/main/resources/solution_2.csv");
+        FileIO.deleteFile("src/main/resources/solution.csv");
+        FileIO.deleteFile("src/main/resources/solution_2.csv");
     }
 
     @Test

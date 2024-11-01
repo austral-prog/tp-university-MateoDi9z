@@ -1,8 +1,8 @@
 package com.university;
 
-import com.university.cliapp.CommandLineInterfaceHandler;
+import com.university.cli.CommandLineInterfaceHandler;
 import com.university.models.University;
-import com.university.utils.IO;
+import com.university.utils.FileIO;
 
 import java.util.List;
 import java.util.Objects;
@@ -22,11 +22,11 @@ public class App {
     }
 
     private static void Submit1() {
-        IO io = new IO(1);
+        FileIO fileIo = new FileIO(1);
 
         University university = new University("Universidad Austral");
 
-        List<String> result = io.readInputFile();
+        List<String> result = fileIo.readInputFile();
 
         result.removeFirst();
         for (String x : result) {
@@ -36,15 +36,15 @@ public class App {
         List<String> studentList = university.getStudentsAsString();
         studentList.addFirst("Student_Name,Course_Count");
 
-        io.writeOutputList(studentList);
+        fileIo.writeOutputList(studentList);
     }
 
     private static void Submit2() {
-        IO io = new IO(2);
+        FileIO fileIo = new FileIO(2);
 
         University university = new University("Universidad Austral");
 
-        List<String> result = io.readInputFile();
+        List<String> result = fileIo.readInputFile();
 
         result.removeFirst();
         for (String x : result) {
@@ -54,6 +54,6 @@ public class App {
         List<String> studentList = university.getGradesList();
         studentList.addFirst("Subject_Name,Evaluation_Name,Student_Name,Grade");
 
-        io.writeOutputList(studentList);
+        fileIo.writeOutputList(studentList);
     }
 }

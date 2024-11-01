@@ -1,4 +1,4 @@
-package com.university.cliapp;
+package com.university.cli;
 
 import com.university.CRUDRepository;
 
