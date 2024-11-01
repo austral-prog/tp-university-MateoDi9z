@@ -1,6 +1,6 @@
-package com.university.models.Course.Evaluation;
+package com.university.Models.Course.Evaluation;
 
-import com.university.models.Course.Exercise;
+import com.university.Models.Course.Exercise;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public abstract class Evaluation {
     public void addExercise(Exercise exercise) { exercises.add(exercise); }
     public void setName(String name) { this.name = name; }
 
-    public abstract float getGrate();
+    public abstract float getGrade();
 
     @Override
     public boolean equals(Object o) {

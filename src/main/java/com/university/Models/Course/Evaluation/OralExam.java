@@ -1,4 +1,4 @@
-package com.university.models.Course.Evaluation;
+package com.university.Models.Course.Evaluation;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,7 @@ public class OralExam extends Evaluation {
     public EvaluationType getType() { return EvaluationType.ORAL_EXAM; }
 
     @Override
-    public float getGrate() {
-        return 0; // TODO: Implement.
+    public float getGrade() {
+        return this.exercises.getFirst().getGrade();
     }
 }

@@ -1,8 +1,8 @@
-package com.university.models.Course;
+package com.university.Models.Course;
 
-import com.university.models.Course.Evaluation.Evaluation;
-import com.university.models.Professor;
-import com.university.models.Student;
+import com.university.Models.Course.Evaluation.Evaluation;
+import com.university.Models.Professor;
+import com.university.Models.Student;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +50,7 @@ public class Course {
         List<String> result = new ArrayList<>();
 
         for (Evaluation evaluation : evaluations) {
-            result.add(String.format("%s,%s,%s,%.1f", this.subject, evaluation.getName(), studentName, evaluation.getGrate()));
+            result.add(String.format("%s,%s,%s,", this.subject, evaluation.getName(), studentName) + evaluation.getGrade());
         }
 
         return result;

@@ -1,15 +1,15 @@
-package com.university.models;
+package com.university.Models;
 
-import com.university.models.Course.Course;
-import com.university.models.Course.Evaluation.*;
-import com.university.models.Course.Exercise;
+import com.university.Models.Course.Course;
+import com.university.Models.Course.Evaluation.*;
+import com.university.Models.Course.Exercise;
 import com.university.utils.Row2;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static com.university.models.Course.Evaluation.Evaluation.EvaluationType;
+import static com.university.Models.Course.Evaluation.Evaluation.EvaluationType;
 
 public class University {
     String universityName;
@@ -83,7 +83,6 @@ public class University {
      * creates instances if not exists.
      * @param row String with data
      */
-    @Deprecated
     public void registerRow1(String row) {
         String[] data = row.split(",");
 

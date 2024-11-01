@@ -1,6 +1,6 @@
-package com.university.models;
+package com.university.Models;
 
-import com.university.models.Course.Exercise;
+import com.university.Models.Course.Exercise;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

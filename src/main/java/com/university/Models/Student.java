@@ -1,20 +1,20 @@
-package com.university.models;
+package com.university.Models;
 
 import com.university.Entity;
-import com.university.common.Person;
-import com.university.models.Course.Course;
+import com.university.Common.Person;
+import com.university.Models.Course.Course;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Student extends Person implements Entity {
-    private Integer id;
     private String email;
     private final List<Course> courses;
+    private Integer id;
 
     public static final int requiredParams = 2;
 
-    static Integer idCounter;
+    static Integer idCounter = 0;
 
     public Student(String name, String email) {
         super(name);
@@ -50,9 +50,6 @@ public class Student extends Person implements Entity {
         return email;
     }
 
-    @Override
-    public int getId() { return id; }
-
     // Setters
     public void addCourse(Course course) {
         int idx = courses.indexOf(course);
@@ -63,9 +60,6 @@ public class Student extends Person implements Entity {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    @Override
-    public void setId(int id) { this.id = id; }
 
     // Other
     @Override
@@ -82,5 +76,15 @@ public class Student extends Person implements Entity {
             return false;
         }
         return this.getName().equals(cStudent.getName());
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 }

@@ -1,16 +1,16 @@
-package com.university.models;
+package com.university.Models;
 
 import java.util.ArrayList;
 import java.util.List;
 
 // Models
-import com.university.models.Course.*;
-import com.university.models.Course.Evaluation.Evaluation;
-import static com.university.models.Course.Evaluation.Evaluation.EvaluationType.WRITTEN_EXAM;
+import com.university.Models.Course.*;
+import com.university.Models.Course.Evaluation.Evaluation;
+
+import static com.university.Models.Course.Evaluation.Evaluation.EvaluationType.FINAL_PRACTICAL_WORK;
 
 // Testing
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -52,31 +52,54 @@ public class UniversityTest {
 //        assertEquals(Integer.parseInt(classroom), university.getCourses().getFirst().getClassroom());
 //    }
 
-//    @Test
-//    public void testRegisterRow2() {
-//        String studentName = "Mona Azure",
-//                subject = "Physics",
-//                name = "Examen Final",
-//                exercise = "Ej8";
-//
-//        Integer grade = 1;
-//
-//        String example = "Mona Azure,Physics,WRITTEN_EXAM,Examen Final,Ej8,1";
-//
-//        this.university.registerRow2(example);
-//
-//        System.out.println(university.getCourses());
-//        Course course = university.getCourses().getFirst();
-//        Evaluation evaluation = course.getEvaluations().getFirst();
-//        Exercise exercise1 = evaluation.getExercises().getFirst();
-//
-//        assertEquals(studentName, university.getStudents().getFirst().getName());
-//        assertEquals(subject, course.getSubject());
-//        assertEquals(name, evaluation.getName());
-//        assertEquals(WRITTEN_EXAM, evaluation.getType());
-//        assertEquals(exercise, exercise1.getName());
-//        assertEquals(grade, exercise1.getGrade());
-//    }
+    @Test
+    public void testRegisterRow2() {
+        String studentName = "Alice Blue",
+                subject = "Geography",
+                evaluationName = "TP3",
+                exercise = "Ej10";
+
+        Integer grade = 5;
+
+        String example = "Alice Blue,Geography,FINAL_PRACTICAL_WORK,TP3,Ej10,5";
+
+        this.university.registerRow2(example);
+
+        Course course = university.getCourses().getFirst();
+        Evaluation evaluation = course.getEvaluations().getFirst();
+        Exercise exercise1 = evaluation.getExercises().getFirst();
+
+        assertEquals(studentName, university.getStudents().getFirst().getName());
+        assertEquals(subject, course.getSubject());
+        assertEquals(evaluationName, evaluation.getName());
+        assertEquals(FINAL_PRACTICAL_WORK, evaluation.getType());
+        assertEquals(exercise, exercise1.getName());
+        assertEquals(grade, exercise1.getGrade());
+    }
+
+    @Test
+    public void testGradeCalculation() {
+        List<String> input = List.of("Alice Blue,Geography,FINAL_PRACTICAL_WORK,TP3,Ej10,5",
+                "Alice Blue,Geography,FINAL_PRACTICAL_WORK,TP3,Ej9,1",
+                "Alice Blue,Geography,FINAL_PRACTICAL_WORK,TP3,Ej5,1",
+                "Alice Blue,Geography,FINAL_PRACTICAL_WORK,TP3,Ej4,6",
+                "Alice Blue,Geography,FINAL_PRACTICAL_WORK,TP3,Ej7,5",
+                "Alice Blue,Geography,FINAL_PRACTICAL_WORK,TP3,Ej1,10",
+                "Alice Blue,Geography,FINAL_PRACTICAL_WORK,TP3,Ej8,2",
+                "Alice Blue,Geography,FINAL_PRACTICAL_WORK,TP3,Ej3,8",
+                "Alice Blue,Geography,FINAL_PRACTICAL_WORK,TP3,Ej2,3",
+                "Alice Blue,Geography,FINAL_PRACTICAL_WORK,TP3,Ej6,9");
+
+        for (String row : input) {
+            university2.registerRow2(row);
+        }
+        Course course = university2.getCourse("Geography", university2.getStudent("Alice Blue"));
+
+        String expected = "Geography,TP3,Alice Blue,5.0";
+        String result = course.Serialize("Alice Blue").getFirst();
+
+        assertEquals(expected, result);
+    }
 
 //    @Test
 //    public void testGetStudentsAsString() {
