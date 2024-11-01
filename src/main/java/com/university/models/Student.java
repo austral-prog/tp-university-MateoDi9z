@@ -1,23 +1,31 @@
 package com.university.models;
 
+import com.university.Entity;
 import com.university.common.Person;
 import com.university.models.Course.Course;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student extends Person {
+public class Student extends Person implements Entity {
+    private Integer id;
     private String email;
     private final List<Course> courses;
 
+    public static final int requiredParams = 2;
+
+    static Integer idCounter;
+
     public Student(String name, String email) {
         super(name);
+        this.id = ++idCounter;
         this.email = email;
         this.courses = new ArrayList<>();
     }
 
     public Student(String name) {
         super(name);
+        this.id = ++idCounter;
         this.email = "";
         this.courses = new ArrayList<>();
     }
@@ -38,10 +46,12 @@ public class Student extends Person {
     public List<Course> getCourses() {
         return this.courses;
     }
-
     public String getEmail() {
         return email;
     }
+
+    @Override
+    public int getId() { return id; }
 
     // Setters
     public void addCourse(Course course) {
@@ -54,8 +64,10 @@ public class Student extends Person {
         this.email = email;
     }
 
-    // Other
+    @Override
+    public void setId(int id) { this.id = id; }
 
+    // Other
     @Override
     public String toString() {
         return String.format("%s,%d", super.getName(), this.getCourseCount());
