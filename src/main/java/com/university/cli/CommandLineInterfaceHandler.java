@@ -76,7 +76,7 @@ public class CommandLineInterfaceHandler implements CLI {
                 CreateMenu();
                 break;
             case 3:
-                // Update Menu
+                UpdateMenu();
                 break;
             case 4:
                 // Delete Menu
@@ -88,7 +88,7 @@ public class CommandLineInterfaceHandler implements CLI {
         return false;
     }
 
-    // CREATE
+    // C - CREATE
     private void CreateMenu() {
         Entities entity = askEntity(this.repositories);
         CRUDRepository<?> repo = this.repositories.get(entity.ordinal());
@@ -104,7 +104,7 @@ public class CommandLineInterfaceHandler implements CLI {
         System.out.println(" ");
     }
 
-    // READ
+    // R - READ
     private void GetMenu() {
         Entities entity = askEntity(this.repositories);
 
@@ -141,6 +141,19 @@ public class CommandLineInterfaceHandler implements CLI {
         }
     }
 
+    // U - UPDATE
+    private void UpdateMenu() {
+        Entities entity = askEntity(this.repositories);
+        CRUDRepository<?> repo = this.repositories.get(entity.ordinal());
+        List<String> params = getParams(repo.getEntityClass());
+        List<String> values = new ArrayList<>();
+
+        for (String param : params) {
+            values.add(askInputString(param));
+        }
+        repo.updateWithParams(values);
+        System.out.println(" ");
+    }
 
     private List<String> getParams(Class<? extends Entity> clase) {
         Field[] campos = clase.getDeclaredFields();

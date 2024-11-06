@@ -28,11 +28,12 @@ public class StudentController implements CRUDRepository<Student> {
 
             if (id <= 0) throw new NumberFormatException("Invalid ID");
             student.setId(id);
+            this.create(student);
+
+            System.out.println("Student Created Successfully");
         } catch (NumberFormatException e) {
             System.out.println("Invalid ID");
-            return;
         }
-        this.create(student);
     }
 
     /**
@@ -68,9 +69,29 @@ public class StudentController implements CRUDRepository<Student> {
             throw new RuntimeException("Student not found");
         }
 
-        oldStudent.setName(entity.getName());
+//        oldStudent.setName(entity.getName());
         oldStudent.setEmail(entity.getEmail());
         oldStudent.setId(entity.getId());
+    }
+
+    @Override
+    public void updateWithParams(List<String> params) {
+        Student student = new Student("", params.get(1));
+
+        try {
+            int id = Integer.parseInt(params.getFirst());
+
+            if (id <= 0) throw new NumberFormatException("Invalid ID");
+
+            student.setId(id);
+            this.update(id, student);
+
+            System.out.println("Student updated");
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid ID");
+        } catch (RuntimeException e) {
+            System.out.println("Not found");
+        }
     }
 
     /**

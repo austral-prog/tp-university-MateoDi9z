@@ -9,6 +9,7 @@ public interface CRUDRepository<T extends Entity> {
      * @param entity the entity to be created
      */
     void create(T entity);
+    void createWithParams(List<String> params);
 
     /**
      * Reads or retrieves an entity from the repository based on its ID.
@@ -17,7 +18,6 @@ public interface CRUDRepository<T extends Entity> {
      * @return the entity found with the given ID, or null if not found
      */
     T read(int id);
-
     List<T> readAll();
 
     /**
@@ -27,6 +27,7 @@ public interface CRUDRepository<T extends Entity> {
      * @param entity the updated entity information
      */
     void update(int id, T entity);
+    void updateWithParams(List<String> params);
 
     /**
      * Deletes an entity from the repository based on its ID.
@@ -34,8 +35,6 @@ public interface CRUDRepository<T extends Entity> {
      * @param id the unique identifier of the entity to be deleted
      */
     void delete(int id);
-
-    void createWithParams(List<String> params);
 
     /**
      * Returns a string identifier that represents the type of entity handled by this CRUD interface.
