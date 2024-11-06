@@ -4,6 +4,7 @@ import com.university.CRUDRepository;
 
 // Controllers
 import com.university.Entity;
+import com.university.controllers.ProfessorController;
 import com.university.controllers.StudentController;
 
 import com.university.models.Entities;
@@ -21,9 +22,9 @@ public class CommandLineInterfaceHandler implements CLI {
     private static ConsoleIO io;
 
     public CommandLineInterfaceHandler() {
-        StudentController studentController = new StudentController();
-        CRUDRepository<?>[] repos = new CRUDRepository<?>[1];
-        repos[0] = studentController;
+        CRUDRepository<?>[] repos = new CRUDRepository<?>[2];
+        repos[0] = new StudentController();
+        repos[1] = new ProfessorController();
         runCLI(repos);
     }
 
