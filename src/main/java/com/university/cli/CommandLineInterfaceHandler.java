@@ -75,7 +75,7 @@ public class CommandLineInterfaceHandler implements CLI {
                 UpdateMenu();
                 break;
             case 4:
-                // Delete Menu
+                DeleteMenu();
                 break;
             case 5:
                 return true;
@@ -97,7 +97,6 @@ public class CommandLineInterfaceHandler implements CLI {
         }
 
         repo.createWithParams(values);
-        System.out.println(" ");
     }
 
     // R - READ
@@ -117,14 +116,13 @@ public class CommandLineInterfaceHandler implements CLI {
             List<? extends Entity> result = repo.readAll();
 
             if (result.isEmpty()) {
-                System.out.println("Ningún registro encontrado. \n");
+                System.out.println("Ningún registro encontrado.");
                 return;
             }
 
             for (Entity entities : result) {
                 System.out.println(entities.toString());
             }
-
             return;
         }
 
@@ -155,10 +153,19 @@ public class CommandLineInterfaceHandler implements CLI {
         repo.updateWithParams(values);
     }
 
+    // D - DELETE
+    private void DeleteMenu() {
+        Entities entity = askEntity(this.repositories);
+        CRUDRepository<?> repo = getRepo(entity);
+
+        Integer ID = askNumber("ID:");
+        repo.delete(ID);
+    }
+
     private CRUDRepository<?> getRepo(Entities entity) {
         return this.repositories.get(entity.ordinal());
     }
-    
+
     private List<String> getParams(Class<? extends Entity> clase) {
         Field[] campos = clase.getDeclaredFields();
         List<String> parameters = new ArrayList<>();

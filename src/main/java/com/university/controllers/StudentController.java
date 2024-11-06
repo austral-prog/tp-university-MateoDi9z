@@ -99,7 +99,18 @@ public class StudentController implements CRUDRepository<Student> {
      */
     @Override
     public void delete(int id) {
+        if (id <= 0) {
+            System.out.println("Invalid ID");
+            return;
+        }
+
+        if (read(id) == null) {
+            System.out.println("Student not found");
+            return;
+        };
+
         students.removeIf(student -> student.getId() == id);
+        System.out.println("Student Removed Successfully");
     }
 
     @Override
