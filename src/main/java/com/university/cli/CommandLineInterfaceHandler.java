@@ -49,11 +49,7 @@ public class CommandLineInterfaceHandler implements CLI {
             System.out.println("Repositorio cargado: " + repo.getIdentifier());
         }
 
-        while (true) {
-            if (showMenu()) {
-                break;
-            }
-        }
+        do { System.out.println(" "); } while (!showMenu());
     }
 
     private boolean showMenu() {
@@ -113,11 +109,11 @@ public class CommandLineInterfaceHandler implements CLI {
         System.out.println("2 - Ver un registro");
         System.out.println("3 - Volver");
 
-        Integer option = askOption(3);
+        Integer option = askOption(2);
 
         CRUDRepository<?> repo = this.repositories.get(entity.ordinal());
 
-        if (option == 1) {
+        if (option == 1) {  // Read All
             List<? extends Entity> result = repo.readAll();
 
             if (result.isEmpty()) {
@@ -128,33 +124,41 @@ public class CommandLineInterfaceHandler implements CLI {
             for (Entity entities : result) {
                 System.out.println(entities.toString());
             }
-        } else if (option == 2) {
-            Integer ID = askNumber("ID:");
-            Entity result = repo.read(ID);
 
-            if (result == null) {
-                System.out.println("Not found \n");
-                return;
-            }
-
-            System.out.println(result + "\n");
+            return;
         }
+
+        // Read one
+        Integer ID = askNumber("ID:");
+        Entity result = repo.read(ID);
+
+        if (result == null) {
+            System.out.println("Not found");
+            return;
+        }
+
+        System.out.println(result);
     }
 
     // U - UPDATE
     private void UpdateMenu() {
         Entities entity = askEntity(this.repositories);
-        CRUDRepository<?> repo = this.repositories.get(entity.ordinal());
+        CRUDRepository<?> repo = getRepo(entity);
+
         List<String> params = getParams(repo.getEntityClass());
         List<String> values = new ArrayList<>();
 
         for (String param : params) {
             values.add(askInputString(param));
         }
+
         repo.updateWithParams(values);
-        System.out.println(" ");
     }
 
+    private CRUDRepository<?> getRepo(Entities entity) {
+        return this.repositories.get(entity.ordinal());
+    }
+    
     private List<String> getParams(Class<? extends Entity> clase) {
         Field[] campos = clase.getDeclaredFields();
         List<String> parameters = new ArrayList<>();
