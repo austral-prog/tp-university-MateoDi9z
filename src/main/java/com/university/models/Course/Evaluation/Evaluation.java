@@ -1,5 +1,6 @@
 package com.university.models.Course.Evaluation;
 
+import com.university.Entity;
 import com.university.models.Course.Exercise;
 
 import java.util.List;

@@ -1,20 +1,25 @@
 package com.university.models.Course;
 
+import com.university.Entity;
 import com.university.models.Course.Evaluation.Evaluation;
+import com.university.models.Entities;
 import com.university.models.Professor;
 import com.university.models.Student;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Course {
+public class Course implements Entity {
+    private Integer id;
     private Integer classroom;
     private String subject;
     private Professor professor;
     private final Student student;
     private final List<Evaluation> evaluations;
 
+    private static int idCounter = 0;
     public Course(String subject, Student student) {
+        this.id = ++idCounter;
         this.subject = subject;
         this.classroom = null;
         this.professor = null;
@@ -23,6 +28,7 @@ public class Course {
     }
 
     public Course(Integer classroom, String subject, Student student, Professor professor) {
+        this.id = ++idCounter;
         this.classroom = classroom;
         this.subject = subject;
         this.professor = professor;
@@ -62,5 +68,20 @@ public class Course {
         if (!(o instanceof Course cCourse)) { return false; }
         return (this.getSubject().equals(cCourse.getSubject()))
                 && (this.getStudent().equals(cCourse.getStudent()));
+    }
+
+    @Override
+    public int getId() {
+        return this.id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("- #%d - Classroom: %d - %s", this.getId(), this.getClassroom(), this.getSubject());
     }
 }

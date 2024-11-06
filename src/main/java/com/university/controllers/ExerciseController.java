@@ -1,36 +1,37 @@
 package com.university.controllers;
 
 import com.university.CRUDRepository;
-import com.university.models.Student;
+import com.university.models.Course.Exercise;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentController implements CRUDRepository<Student> {
-    private final List<Student> students;
+public class ExerciseController implements CRUDRepository<Exercise> {
+    private final List<Exercise> exercises;
 
-    public StudentController() {
-        this.students = new ArrayList<>();
+    public ExerciseController() {
+        this.exercises = new ArrayList<>();
     }
 
     /**
      * @param entity the entity to be created
      */
-    public void create(Student entity) {
-        students.add(entity);
+    public void create(Exercise entity) {
+        exercises.add(entity);
     }
 
     @Override
     public void createWithParams(List<String> params) {
-        Student student = new Student("", params.get(1));
         try {
+            Exercise exercise = new Exercise(params.get(1), Integer.parseInt(params.get(2)));
+
             int id = Integer.parseInt(params.getFirst());
             if (id <= 0) throw new NumberFormatException("Invalid ID");
 
-            student.setId(id);
-            this.create(student);
+            exercise.setId(id);
+            this.create(exercise);
 
-            System.out.println("Student Created Successfully");
+            System.out.println("Exercise Created Successfully");
         } catch (NumberFormatException e) {
             System.out.println("Invalid ID");
         }
@@ -38,20 +39,20 @@ public class StudentController implements CRUDRepository<Student> {
 
     /**
      * @param id the unique identifier of the entity to be read
-     * @return found student
+     * @return found exercise
      */
     @Override
-    public Student read(int id) {
-        return students
+    public Exercise read(int id) {
+        return exercises
                 .stream()
-                .filter(student -> student.getId() == id)
+                .filter(exercise -> exercise.getId() == id)
                 .findFirst()
                 .orElse(null);
     }
 
     @Override
-    public List<Student> readAll() {
-        return students;
+    public List<Exercise> readAll() {
+        return exercises;
     }
 
     /**
@@ -59,34 +60,34 @@ public class StudentController implements CRUDRepository<Student> {
      * @param entity the updated entity information
      */
     @Override
-    public void update(int id, Student entity) throws RuntimeException {
-        Student oldStudent = students.stream()
+    public void update(int id, Exercise entity) throws RuntimeException {
+        Exercise oldExercise = exercises.stream()
                 .filter(s -> s.getId() == id)
                 .findFirst()
                 .orElse(null);
 
-        if (oldStudent == null) {
-            throw new RuntimeException("Student not found");
+        if (oldExercise == null) {
+            throw new RuntimeException("Exercise not found");
         }
 
-//        oldStudent.setName(entity.getName());
-        oldStudent.setEmail(entity.getEmail());
-        oldStudent.setId(entity.getId());
+//        oldExercise.setName(entity.getName());
+        oldExercise.setName(entity.getName());
+        oldExercise.setGrade(entity.getGrade());
+        oldExercise.setId(entity.getId());
     }
 
     @Override
     public void updateWithParams(List<String> params) {
-        Student student = new Student("", params.get(1));
-
         try {
-            int id = Integer.parseInt(params.getFirst());
+            Exercise exercise = new Exercise(params.get(1), Integer.parseInt(params.get(2)));
 
+            int id = Integer.parseInt(params.getFirst());
             if (id <= 0) throw new NumberFormatException("Invalid ID");
 
-            student.setId(id);
-            this.update(id, student);
+            exercise.setId(id);
+            this.update(id, exercise);
 
-            System.out.println("Student updated Successfully");
+            System.out.println("Exercise updated Successfully");
         } catch (NumberFormatException e) {
             System.out.println("Invalid ID");
         } catch (RuntimeException e) {
@@ -105,21 +106,21 @@ public class StudentController implements CRUDRepository<Student> {
         }
 
         if (read(id) == null) {
-            System.out.println("Student not found");
+            System.out.println("Exercise not found");
             return;
         }
 
-        students.removeIf(student -> student.getId() == id);
-        System.out.println("Student Removed Successfully");
+        exercises.removeIf(exercise -> exercise.getId() == id);
+        System.out.println("Exercise Removed Successfully");
     }
 
     @Override
     public String getIdentifier() {
-        return "Student";
+        return "Exercise";
     }
 
     @Override
-    public Class<Student> getEntityClass() {
-        return Student.class;
+    public Class<Exercise> getEntityClass() {
+        return Exercise.class;
     }
 }

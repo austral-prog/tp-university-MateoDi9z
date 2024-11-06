@@ -7,9 +7,7 @@ public class Exercise implements Entity {
     private String name;
     private Integer grade;
 
-    public static final int requiredParams = 2;
-
-    static Integer idCounter = 0;
+    private static int idCounter = 0;
 
     public Exercise(String name, Integer grade) {
         this.id = ++idCounter;
@@ -39,5 +37,10 @@ public class Exercise implements Entity {
     @Override
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("- #%d - %s | Grade: %s", this.getId(), this.getName(), this.getGrade());
     }
 }

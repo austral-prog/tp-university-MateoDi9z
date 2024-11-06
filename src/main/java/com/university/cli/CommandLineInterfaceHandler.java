@@ -4,6 +4,8 @@ import com.university.CRUDRepository;
 
 // Controllers
 import com.university.Entity;
+import com.university.controllers.CourseController;
+import com.university.controllers.ExerciseController;
 import com.university.controllers.ProfessorController;
 import com.university.controllers.StudentController;
 
@@ -22,9 +24,11 @@ public class CommandLineInterfaceHandler implements CLI {
     private static ConsoleIO io;
 
     public CommandLineInterfaceHandler() {
-        CRUDRepository<?>[] repos = new CRUDRepository<?>[2];
+        CRUDRepository<?>[] repos = new CRUDRepository<?>[4];
         repos[0] = new StudentController();
         repos[1] = new ProfessorController();
+        repos[2] = new CourseController();
+        repos[3] = new ExerciseController();
         runCLI(repos);
     }
 
@@ -109,9 +113,11 @@ public class CommandLineInterfaceHandler implements CLI {
         System.out.println("2 - Ver un registro");
         System.out.println("3 - Volver");
 
-        Integer option = askOption(2);
+        Integer option = askOption(3);
 
         CRUDRepository<?> repo = this.repositories.get(entity.ordinal());
+
+        if (option == 3) return;
 
         if (option == 1) {  // Read All
             List<? extends Entity> result = repo.readAll();

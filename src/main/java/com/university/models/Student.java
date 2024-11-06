@@ -60,12 +60,6 @@ public class Student extends Person implements Entity {
         this.email = email;
     }
 
-    // Other
-    @Override
-    public String toString() {
-        return String.format("- # %d - %s", this.getId(), this.getEmail());
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == this) {
@@ -85,5 +79,10 @@ public class Student extends Person implements Entity {
     @Override
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("- #%d - %s", this.getId(), this.getEmail());
     }
 }

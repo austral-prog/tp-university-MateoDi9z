@@ -23,6 +23,6 @@ public class Professor extends Person  implements Entity {
 
     @Override
     public String toString() {
-        return String.format("- # %d %s", this.getId(), this.getName());
+        return String.format("- #%d %s", this.getId(), this.getName());
     }
 }

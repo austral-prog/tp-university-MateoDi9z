@@ -108,7 +108,7 @@ public class ProfessorController implements CRUDRepository<Professor> {
         if (read(id) == null) {
             System.out.println("Professor not found");
             return;
-        };
+        }
 
         professors.removeIf(student -> student.getId() == id);
         System.out.println("Professor Removed Successfully");
