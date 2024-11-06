@@ -4,6 +4,8 @@ import com.university.models.Course.Course;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StudentTest {
@@ -16,6 +18,14 @@ public class StudentTest {
     }
 
     @Test
+    public void testGetters() {
+        assertEquals(0, student.getCourseCount());
+        assertEquals(new ArrayList<Course>(), student.getCourses());
+        assertEquals("mateo@gmail", student.getEmail());
+        assertEquals(1, student.getId());
+    }
+
+    @Test
     public void testAddGetCourses() {
         assertEquals(0, student.getCourseCount());
         student.addCourse(new Course(1, "Prog", student, new Professor("Brunito")));
@@ -25,18 +35,17 @@ public class StudentTest {
     }
 
     @Test
-    public void testGetters() {
-        assertEquals(0, student.getCourseCount());
-        student.addCourse(new Course(4, "Futbol", student, new Professor("Brunito")));
-        assertEquals("mateo@gmail", student.getEmail());
-        assertEquals(1, student.getCourses().size());
-    }
-
-    @Test
     public void testSetEmail() {
         assertEquals("mateo@gmail", student.getEmail());
         student.setEmail("mateo@gmail.com");
         assertEquals("mateo@gmail.com", student.getEmail());
+    }
+
+    @Test
+    public void testSetId() {
+        assertEquals(123, student.getId());
+        student.setId(123);
+        assertEquals(123, student.getId());
     }
 
     @Test
@@ -48,11 +57,11 @@ public class StudentTest {
 
     @Test
     public void testEquals() {
-        Student student2 = new Student("Bruno");
+        Student student2 = new Student("Mateo");
         Student student3 = student2;
-        assertFalse(student.equals(student2));
-        assertTrue(student2.equals(student3));
-        assertFalse(student.equals(new Object()));
-        assertTrue(student.equals(new Student("Mateo")));
+        assertNotEquals(student, student2);
+        assertEquals(student2, student3);
+        assertNotEquals(student, new Object());
+        assertEquals(student, new Student("Mateo"));
     }
 }

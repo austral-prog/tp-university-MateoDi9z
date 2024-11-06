@@ -83,7 +83,6 @@ public class University {
      * creates instances if not exists.
      * @param row String with data
      */
-    @Deprecated
     public void registerRow1(String row) {
         String[] data = row.split(",");
 

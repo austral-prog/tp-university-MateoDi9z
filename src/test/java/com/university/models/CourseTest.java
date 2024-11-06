@@ -2,13 +2,13 @@ package com.university.models;
 
 import com.university.models.Course.Course;
 import com.university.models.Course.Evaluation.Evaluation;
+import com.university.models.Course.Evaluation.FinalPracticalWork;
 import com.university.models.Course.Exercise;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static com.university.models.Course.Evaluation.Evaluation.EvaluationType.FINAL_PRACTICAL_WORK;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CourseTest {
@@ -57,7 +57,7 @@ public class CourseTest {
     public void testSetGetEvaluations() {
         assertEquals(new ArrayList<>(), course.getEvaluations());
         assertEquals(new ArrayList<>(), fullCourse.getEvaluations());
-        Evaluation evaluation = new Evaluation(FINAL_PRACTICAL_WORK, "Tp 2");
+        Evaluation evaluation = new FinalPracticalWork("Tp 2");
         evaluation.addExercise(new Exercise("ej 1", 7));
         course.addEvaluation(evaluation);
         fullCourse.addEvaluation(evaluation);

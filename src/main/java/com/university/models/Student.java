@@ -1,23 +1,29 @@
 package com.university.models;
 
+import com.university.Entity;
 import com.university.common.Person;
 import com.university.models.Course.Course;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student extends Person {
+public class Student extends Person implements Entity {
+    private Integer id;
     private String email;
+
     private final List<Course> courses;
+    private static int idCounter = 0;
 
     public Student(String name, String email) {
         super(name);
+        this.id = ++idCounter;
         this.email = email;
         this.courses = new ArrayList<>();
     }
 
     public Student(String name) {
         super(name);
+        this.id = ++idCounter;
         this.email = "";
         this.courses = new ArrayList<>();
     }
@@ -55,10 +61,9 @@ public class Student extends Person {
     }
 
     // Other
-
     @Override
     public String toString() {
-        return String.format("%s,%d", super.getName(), this.getCourseCount());
+        return String.format("- # %d - %s", this.getId(), this.getEmail());
     }
 
     @Override
@@ -70,5 +75,15 @@ public class Student extends Person {
             return false;
         }
         return this.getName().equals(cStudent.getName());
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
     }
 }

@@ -1,5 +1,7 @@
 package com.university.models.Course.Evaluation;
 
+import com.university.models.Course.Exercise;
+
 import java.util.ArrayList;
 
 public class FinalPracticalWork extends Evaluation {
@@ -12,7 +14,12 @@ public class FinalPracticalWork extends Evaluation {
     public EvaluationType getType() { return EvaluationType.FINAL_PRACTICAL_WORK; }
 
     @Override
-    public float getGrate() {
-        return 0; // TODO: Implement.
+    public float getGrade() {
+        float nota = 0.0f;
+        for (Exercise ex : this.exercises) {
+            nota += ex.getGrade();
+        }
+//        if (nota > 50.0f) return nota / 10;
+        return nota;
     }
 }

@@ -1,0 +1,157 @@
+package com.university.cli;
+
+import com.university.CRUDRepository;
+
+// Controllers
+import com.university.Entity;
+import com.university.controllers.StudentController;
+
+import com.university.models.Entities;
+import com.university.utils.ConsoleIO;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static com.university.utils.Dialog.*;
+
+public class CommandLineInterfaceHandler implements CLI {
+    private List<CRUDRepository<?>> repositories = new ArrayList<>();
+    private static ConsoleIO io;
+
+    public CommandLineInterfaceHandler() {
+        StudentController studentController = new StudentController();
+        CRUDRepository<?>[] repos = new CRUDRepository<?>[1];
+        repos[0] = studentController;
+        runCLI(repos);
+    }
+
+    // Singleton Console Input Output
+    public static ConsoleIO getIO() {
+        if (io == null) {
+            io = new ConsoleIO();
+        }
+        return io;
+    }
+
+    /**
+     * @param crudInterfaces an array of CRUDInterface instances, each representing a different entity type.
+     *                       Each CRUDInterface allows the CLI to perform Create, Read, Update, and Delete
+     *                       operations on that specific entity type.
+     */
+    @Override
+    public void runCLI(CRUDRepository<?>[] crudInterfaces) {
+        this.repositories = new ArrayList<>(List.of(Arrays.stream(crudInterfaces).toArray(CRUDRepository<?>[]::new)));
+
+        System.out.println("Bienvenidos al C L I !");
+        for (CRUDRepository<?> repo : crudInterfaces) {
+            System.out.println("Repositorio cargado: " + repo.getIdentifier());
+        }
+
+        while (true) {
+            if (showMenu()) {
+                break;
+            }
+        }
+    }
+
+    private boolean showMenu() {
+        System.out.println("Elija una opción:");
+        System.out.println("1. Listar registros");
+        System.out.println("2. Crear registro");
+        System.out.println("3. Modificar registro");
+        System.out.println("4. Eliminar registro");
+        System.out.println("5. Salir");
+
+        Integer option = askOption(5);
+
+        if (option == null) return false;
+
+        switch (option) {
+            case 1:
+                GetMenu();
+                break;
+            case 2:
+                CreateMenu();
+                break;
+            case 3:
+                // Update Menu
+                break;
+            case 4:
+                // Delete Menu
+                break;
+            case 5:
+                return true;
+        }
+
+        return false;
+    }
+
+    // CREATE
+    private void CreateMenu() {
+        Entities entity = askEntity(this.repositories);
+        CRUDRepository<?> repo = this.repositories.get(entity.ordinal());
+
+        List<String> params = getParams(repo.getEntityClass());
+        List<String> values = new ArrayList<>();
+
+        for (String param : params) {
+            values.add(askInputString(param));
+        }
+
+        repo.createWithParams(values);
+        System.out.println(" ");
+    }
+
+    // READ
+    private void GetMenu() {
+        Entities entity = askEntity(this.repositories);
+
+        System.out.println("Seleccione una Opción:");
+        System.out.println("1 - Listar registros");
+        System.out.println("2 - Ver un registro");
+        System.out.println("3 - Volver");
+
+        Integer option = askOption(3);
+
+        CRUDRepository<?> repo = this.repositories.get(entity.ordinal());
+
+        if (option == 1) {
+            List<? extends Entity> result = repo.readAll();
+
+            if (result.isEmpty()) {
+                System.out.println("Ningún registro encontrado. \n");
+                return;
+            }
+
+            for (Entity entities : result) {
+                System.out.println(entities.toString());
+            }
+        } else if (option == 2) {
+            Integer ID = askNumber("ID:");
+            Entity result = repo.read(ID);
+
+            if (result == null) {
+                System.out.println("Not found \n");
+                return;
+            }
+
+            System.out.println(result + "\n");
+        }
+    }
+
+
+    private List<String> getParams(Class<? extends Entity> clase) {
+        Field[] campos = clase.getDeclaredFields();
+        List<String> parameters = new ArrayList<>();
+
+        for (Field campo : campos) {
+            if (!(campo.getType().getSimpleName().equals("Integer")) &&
+                    !(campo.getType().getSimpleName().equals("String"))) continue;
+            parameters.add(campo.getName());
+        }
+
+        return parameters;
+    }
+}

@@ -8,11 +8,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class IOTest {
 
-    private IO reader;
+    private FileIO reader;
 
     @BeforeEach
     public void setUp() throws Exception {
-        this.reader = new IO(1);
+        this.reader = new FileIO(1);
         this.reader.readFile(this.reader.getInputFilePath());
     }
 

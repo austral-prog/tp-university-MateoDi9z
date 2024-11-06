@@ -12,7 +12,7 @@ public class PracticalWork extends Evaluation {
     public EvaluationType getType() { return EvaluationType.PRACTICAL_WORK; }
 
     @Override
-    public float getGrate() {
-        return 0; // TODO: Implement.
+    public float getGrade() {
+        return this.exercises.getLast().getGrade();
     }
 }

@@ -50,7 +50,7 @@ public class Course {
         List<String> result = new ArrayList<>();
 
         for (Evaluation evaluation : evaluations) {
-            result.add(String.format("%s,%s,%s,%.1f", this.subject, evaluation.getName(), studentName, evaluation.getGrate()));
+            result.add(String.format("%s,%s,%s,", this.subject, evaluation.getName(), studentName) + evaluation.getGrade());
         }
 
         return result;

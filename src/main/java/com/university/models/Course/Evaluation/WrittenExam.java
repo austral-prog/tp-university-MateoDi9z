@@ -1,5 +1,7 @@
 package com.university.models.Course.Evaluation;
 
+import com.university.models.Course.Exercise;
+
 import java.util.ArrayList;
 
 public class WrittenExam extends Evaluation {
@@ -12,7 +14,11 @@ public class WrittenExam extends Evaluation {
     public EvaluationType getType() { return EvaluationType.WRITTEN_EXAM; }
 
     @Override
-    public float getGrate() {
-        return 0; // TODO: Implement.
+    public float getGrade() {
+        float nota = 0.0f;
+        for (Exercise exercise : exercises) {
+            nota += exercise.getGrade();
+        }
+        return nota / exercises.size();
     }
 }
