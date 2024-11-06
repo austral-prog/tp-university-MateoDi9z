@@ -8,13 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Student extends Person implements Entity {
-    private String email;
-    private final List<Course> courses;
     private Integer id;
+    private String email;
 
-    public static final int requiredParams = 2;
-
-    static Integer idCounter = 0;
+    private final List<Course> courses;
+    private static int idCounter = 0;
 
     public Student(String name, String email) {
         super(name);
@@ -46,6 +44,7 @@ public class Student extends Person implements Entity {
     public List<Course> getCourses() {
         return this.courses;
     }
+
     public String getEmail() {
         return email;
     }
@@ -64,7 +63,7 @@ public class Student extends Person implements Entity {
     // Other
     @Override
     public String toString() {
-        return String.format("%s,%d", super.getName(), this.getCourseCount());
+        return String.format("- # %d - %s", this.getId(), this.getEmail());
     }
 
     @Override

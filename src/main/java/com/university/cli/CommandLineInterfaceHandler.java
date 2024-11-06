@@ -6,24 +6,33 @@ import com.university.CRUDRepository;
 import com.university.Entity;
 import com.university.controllers.StudentController;
 
-// Models
-
+import com.university.models.Entities;
 import com.university.utils.ConsoleIO;
 
-import javax.xml.stream.events.EntityReference;
-import java.nio.file.attribute.AclEntryType;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import static com.university.utils.Dialog.*;
+
 public class CommandLineInterfaceHandler implements CLI {
-    private final List<CRUDRepository<?>> repositories = new ArrayList<>();
-    ConsoleIO io;
+    private List<CRUDRepository<?>> repositories = new ArrayList<>();
+    private static ConsoleIO io;
 
     public CommandLineInterfaceHandler() {
         StudentController studentController = new StudentController();
-        repositories.add(studentController);
+        CRUDRepository<?>[] repos = new CRUDRepository<?>[1];
+        repos[0] = studentController;
+        runCLI(repos);
+    }
 
-        runCLI(repositories.toArray(new CRUDRepository<?>[0]));
+    // Singleton Console Input Output
+    public static ConsoleIO getIO() {
+        if (io == null) {
+            io = new ConsoleIO();
+        }
+        return io;
     }
 
     /**
@@ -33,7 +42,7 @@ public class CommandLineInterfaceHandler implements CLI {
      */
     @Override
     public void runCLI(CRUDRepository<?>[] crudInterfaces) {
-        this.io = new ConsoleIO();
+        this.repositories = new ArrayList<>(List.of(Arrays.stream(crudInterfaces).toArray(CRUDRepository<?>[]::new)));
 
         System.out.println("Bienvenidos al C L I !");
         for (CRUDRepository<?> repo : crudInterfaces) {
@@ -64,8 +73,7 @@ public class CommandLineInterfaceHandler implements CLI {
                 GetMenu();
                 break;
             case 2:
-                // Create Menu
-
+                CreateMenu();
                 break;
             case 3:
                 // Update Menu
@@ -80,17 +88,25 @@ public class CommandLineInterfaceHandler implements CLI {
         return false;
     }
 
-    // READ
-    private void GetMenu() {
-        int i = 1;
-        System.out.println("Seleccione una Entidad:");
+    // CREATE
+    private void CreateMenu() {
+        Entities entity = askEntity(this.repositories);
+        CRUDRepository<?> repo = this.repositories.get(entity.ordinal());
 
-        for (CRUDRepository<?> repo : this.repositories) {
-            System.out.printf(" - %d - %s%n", i, repo.getIdentifier());
+        List<String> params = getParams(repo.getEntityClass());
+        List<String> values = new ArrayList<>();
+
+        for (String param : params) {
+            values.add(askInputString(param));
         }
 
-        Integer entity = askOption(2);
-        if (entity == null) { return; }
+        repo.createWithParams(values);
+        System.out.println(" ");
+    }
+
+    // READ
+    private void GetMenu() {
+        Entities entity = askEntity(this.repositories);
 
         System.out.println("Seleccione una Opción:");
         System.out.println("1 - Listar registros");
@@ -98,57 +114,44 @@ public class CommandLineInterfaceHandler implements CLI {
         System.out.println("3 - Volver");
 
         Integer option = askOption(3);
-        if (option == null || option == 3) { return; }
 
-        CRUDRepository<?> repo = this.repositories.get(entity-1);
+        CRUDRepository<?> repo = this.repositories.get(entity.ordinal());
 
         if (option == 1) {
-            Entity result = repo.read(1);
-            System.out.flush();
-            if (result == null) System.out.println("Ningun registro encontrado.");
+            List<? extends Entity> result = repo.readAll();
 
-            for (int j = 1; j < 5; j++) {
-                result = repo.read(j+1);
-                if (result == null) continue;
-                System.out.println(result);
+            if (result.isEmpty()) {
+                System.out.println("Ningún registro encontrado. \n");
+                return;
+            }
+
+            for (Entity entities : result) {
+                System.out.println(entities.toString());
             }
         } else if (option == 2) {
             Integer ID = askNumber("ID:");
             Entity result = repo.read(ID);
 
             if (result == null) {
-                System.out.println("Not found");
+                System.out.println("Not found \n");
                 return;
             }
 
-            System.out.println(result);
+            System.out.println(result + "\n");
         }
     }
 
-    private Integer askNumber(String prefix) {
-        String read = io.readLine(prefix);
-        try {
-            return Integer.parseInt(read);
-        } catch (NumberFormatException e) {
-            System.out.println("Introduzca un numero.");
-            return null;
-        }
-    }
 
-    private Integer askOption(Integer limit) {
-        String read = io.readLine(">");
+    private List<String> getParams(Class<? extends Entity> clase) {
+        Field[] campos = clase.getDeclaredFields();
+        List<String> parameters = new ArrayList<>();
 
-        try {
-            int readInt = Integer.parseInt(read);
-            if (readInt < 1 || readInt > limit) {
-                throw new ArrayIndexOutOfBoundsException();
-            }
-            return readInt;
-        } catch (NumberFormatException e) {
-            System.out.println("Introduzca un numero.");
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("El numero no tiene ninguna función asociada.");
+        for (Field campo : campos) {
+            if (!(campo.getType().getSimpleName().equals("Integer")) &&
+                    !(campo.getType().getSimpleName().equals("String"))) continue;
+            parameters.add(campo.getName());
         }
-        return null;
+
+        return parameters;
     }
 }

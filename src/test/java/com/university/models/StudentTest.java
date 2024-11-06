@@ -23,7 +23,6 @@ public class StudentTest {
         assertEquals(new ArrayList<Course>(), student.getCourses());
         assertEquals("mateo@gmail", student.getEmail());
         assertEquals(1, student.getId());
-        assertEquals(2, Student.requiredParams);
     }
 
     @Test

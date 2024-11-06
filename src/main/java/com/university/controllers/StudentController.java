@@ -17,16 +17,27 @@ public class StudentController implements CRUDRepository<Student> {
      * @param entity the entity to be created
      */
     public void create(Student entity) throws RuntimeException {
-        if (students.contains(entity)) {
-            throw new RuntimeException("Student already exists");
-        }
-
         students.add(entity);
+    }
+
+    @Override
+    public void createWithParams(List<String> params) {
+        Student student = new Student("", params.get(1));
+        try {
+            int id = Integer.parseInt(params.getFirst());
+
+            if (id <= 0) throw new NumberFormatException("Invalid ID");
+            student.setId(id);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid ID");
+            return;
+        }
+        this.create(student);
     }
 
     /**
      * @param id the unique identifier of the entity to be read
-     * @return
+     * @return found student
      */
     @Override
     public Student read(int id) {
@@ -35,6 +46,11 @@ public class StudentController implements CRUDRepository<Student> {
                 .filter(student -> student.getId() == id)
                 .findFirst()
                 .orElse(null);
+    }
+
+    @Override
+    public List<Student> readAll() {
+        return students;
     }
 
     /**
@@ -65,17 +81,11 @@ public class StudentController implements CRUDRepository<Student> {
         students.removeIf(student -> student.getId() == id);
     }
 
-    /**
-     * @return
-     */
     @Override
     public String getIdentifier() {
         return "Student";
     }
 
-    /**
-     * @return
-     */
     @Override
     public Class<Student> getEntityClass() {
         return Student.class;

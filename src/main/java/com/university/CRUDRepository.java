@@ -1,5 +1,7 @@
 package com.university;
 
+import java.util.List;
+
 public interface CRUDRepository<T extends Entity> {
     /**
      * Creates a new entity in the repository.
@@ -16,6 +18,8 @@ public interface CRUDRepository<T extends Entity> {
      */
     T read(int id);
 
+    List<T> readAll();
+
     /**
      * Updates an existing entity in the repository.
      *
@@ -30,6 +34,8 @@ public interface CRUDRepository<T extends Entity> {
      * @param id the unique identifier of the entity to be deleted
      */
     void delete(int id);
+
+    void createWithParams(List<String> params);
 
     /**
      * Returns a string identifier that represents the type of entity handled by this CRUD interface.
