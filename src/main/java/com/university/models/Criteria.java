@@ -73,6 +73,6 @@ public class Criteria implements Entity {
 
     @Override
     public String toString() {
-        return "";
+        return " - %d %s %s";
     }
 }

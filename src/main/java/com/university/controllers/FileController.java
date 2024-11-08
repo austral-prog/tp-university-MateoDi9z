@@ -2,11 +2,7 @@ package com.university.controllers;
 
 import com.university.CRUDRepository;
 import com.university.common.Entities;
-import com.university.models.Course.Course;
-import com.university.models.Criteria;
-import com.university.models.Professor;
 import com.university.models.Student;
-import com.university.models.University;
 import com.university.utils.FileIO;
 import com.university.utils.fileStructure.Input1;
 import com.university.utils.fileStructure.Input2;
