@@ -6,6 +6,7 @@ import com.university.models.Student;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class CourseController implements CRUDRepository<Course> {
@@ -15,11 +16,23 @@ public class CourseController implements CRUDRepository<Course> {
             this.courses = new ArrayList<>();
         }
 
-        /**
-         * @param entity the entity to be created
-         */
-        public void create(Course entity) {
+        @Override
+        public int create(Course entity) {
+            Course found = this.courses.stream()
+                    .filter(x ->
+                            Objects.equals(x.getSubject(), entity.getSubject()) &&
+                            Objects.equals(x.getStudent().getName(), entity.getStudent().getName()) &&
+                            Objects.equals(x.getProfessor(), entity.getProfessor())
+                    ).findFirst()
+                    .orElse(null);
+
+            if (found != null) {
+                return found.getId();
+            }
+
             courses.add(entity);
+            entity.getStudent().addCourse(entity);
+            return entity.getId();
         }
 
         @Override

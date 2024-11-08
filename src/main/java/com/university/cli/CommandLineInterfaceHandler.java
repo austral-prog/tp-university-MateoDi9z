@@ -4,12 +4,9 @@ import com.university.CRUDRepository;
 
 // Controllers
 import com.university.Entity;
-import com.university.controllers.CourseController;
-import com.university.controllers.ExerciseController;
-import com.university.controllers.ProfessorController;
-import com.university.controllers.StudentController;
+import com.university.controllers.*;
 
-import com.university.models.Entities;
+import com.university.common.Entities;
 import com.university.utils.ConsoleIO;
 
 import java.lang.reflect.Field;
@@ -24,11 +21,12 @@ public class CommandLineInterfaceHandler implements CLI {
     private static ConsoleIO io;
 
     public CommandLineInterfaceHandler() {
-        CRUDRepository<?>[] repos = new CRUDRepository<?>[4];
-        repos[0] = new StudentController();
-        repos[1] = new ProfessorController();
-        repos[2] = new CourseController();
-        repos[3] = new ExerciseController();
+        CRUDRepository<?>[] repos = new CRUDRepository<?>[5];
+        repos[Entities.STUDENT.ordinal()] = new StudentController();
+        repos[Entities.PROFESSOR.ordinal()] = new ProfessorController();
+        repos[Entities.COURSE.ordinal()] = new CourseController();
+        repos[Entities.EXERCISE.ordinal()] = new ExerciseController();
+        repos[Entities.CRITERIA.ordinal()] = new CriteriaController();
         runCLI(repos);
     }
 

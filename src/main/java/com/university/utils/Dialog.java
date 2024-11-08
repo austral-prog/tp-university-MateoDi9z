@@ -1,7 +1,7 @@
 package com.university.utils;
 
 import com.university.CRUDRepository;
-import com.university.models.Entities;
+import com.university.common.Entities;
 
 import java.util.List;
 

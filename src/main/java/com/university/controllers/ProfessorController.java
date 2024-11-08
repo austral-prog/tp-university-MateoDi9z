@@ -1,11 +1,13 @@
 package com.university.controllers;
 
 import com.university.CRUDRepository;
+import com.university.models.Course.Course;
 import com.university.models.Professor;
 import com.university.models.Student;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ProfessorController implements CRUDRepository<Professor> {
     private final List<Professor> professors;
@@ -14,12 +16,20 @@ public class ProfessorController implements CRUDRepository<Professor> {
         this.professors = new ArrayList<>();
     }
 
-    /**
-     * @param entity the entity to be created
-     */
     @Override
-    public void create(Professor entity) {
+    public int create(Professor entity) {
+        Professor found = this.professors.stream()
+                .filter(x ->
+                        Objects.equals(x.getName(), entity.getName())
+                ).findFirst()
+                .orElse(null);
+
+        if (found != null) {
+            return found.getId();
+        }
+
         professors.add(entity);
+        return entity.getId();
     }
 
     @Override

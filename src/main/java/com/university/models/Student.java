@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Student extends Person implements Entity {
     private Integer id;
-    private String email;
+    private String email;   // UNIQUE
 
     private final List<Course> courses;
     private static int idCounter = 0;
@@ -33,7 +33,10 @@ public class Student extends Person implements Entity {
         int i = 0;
         List<String> subjects = new ArrayList<>();
 
+        if (this.courses == null) return 0;
+
         for (Course c : this.courses) {
+            if (c == null) continue;
             if (subjects.contains(c.getSubject())) continue;
             subjects.add(c.getSubject());
             i += 1;

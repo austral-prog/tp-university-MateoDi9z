@@ -1,6 +1,5 @@
 package com.university.models.Course.Evaluation;
 
-import com.university.Entity;
 import com.university.models.Course.Exercise;
 
 import java.util.List;
@@ -26,6 +25,30 @@ public abstract class Evaluation {
     public void setName(String name) { this.name = name; }
 
     public abstract float getGrade();
+
+    public float getAverageGrade() {
+        int i = 0;
+        for (Exercise exercise : exercises) {
+            i += exercise.getGrade();
+        }
+        return (float) i / exercises.size();
+    }
+
+    public Integer getMaxGrade() {
+        int i = 0;
+        for (Exercise exercise : exercises) {
+            if (exercise.getGrade() > i) i = exercise.getGrade();
+        }
+        return i;
+    }
+
+    public Integer getMinGrade() {
+        int i = exercises.getFirst().getGrade();
+        for (Exercise exercise : exercises) {
+            if (exercise.getGrade() < i) i = exercise.getGrade();
+        }
+        return i;
+    }
 
     @Override
     public boolean equals(Object o) {

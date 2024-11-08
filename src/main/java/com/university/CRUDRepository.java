@@ -7,8 +7,9 @@ public interface CRUDRepository<T extends Entity> {
      * Creates a new entity in the repository.
      *
      * @param entity the entity to be created
+     * @return ID of created entity
      */
-    void create(T entity);
+    int create(T entity);
     void createWithParams(List<String> params);
 
     /**

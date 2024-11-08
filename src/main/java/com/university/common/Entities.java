@@ -1,8 +1,9 @@
-package com.university.models;
+package com.university.common;
 
 public enum Entities {
     STUDENT,
     PROFESSOR,
     COURSE,
     EXERCISE,
+    CRITERIA,
 }
