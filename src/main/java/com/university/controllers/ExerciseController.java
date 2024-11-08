@@ -1,10 +1,12 @@
 package com.university.controllers;
 
 import com.university.CRUDRepository;
+import com.university.models.Course.Course;
 import com.university.models.Course.Exercise;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ExerciseController implements CRUDRepository<Exercise> {
     private final List<Exercise> exercises;
@@ -13,11 +15,21 @@ public class ExerciseController implements CRUDRepository<Exercise> {
         this.exercises = new ArrayList<>();
     }
 
-    /**
-     * @param entity the entity to be created
-     */
-    public void create(Exercise entity) {
+    @Override
+    public int create(Exercise entity) {
+        Exercise found = this.exercises.stream()
+                .filter(x ->
+                        Objects.equals(x.getId(), entity.getId()) ||
+                        Objects.equals(x.getName(), entity.getName())
+                ).findFirst()
+                .orElse(null);
+
+        if (found != null) {
+            return found.getId();
+        }
+
         exercises.add(entity);
+        return entity.getId();
     }
 
     @Override

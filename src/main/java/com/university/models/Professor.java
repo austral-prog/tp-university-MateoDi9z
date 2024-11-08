@@ -25,4 +25,15 @@ public class Professor extends Person  implements Entity {
     public String toString() {
         return String.format("- #%d %s", this.getId(), this.getName());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Professor cProfessor)) {
+            return false;
+        }
+        return this.getName().equals(cProfessor.getName());
+    }
 }

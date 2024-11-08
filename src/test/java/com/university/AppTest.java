@@ -18,7 +18,8 @@ public class AppTest {
     @BeforeAll
     public static void cleanUp() {
         FileIO.deleteFile("src/main/resources/solution.csv");
-        FileIO.deleteFile("src/main/resources/solution_2.csv");
+//        FileIO.deleteFile("src/main/resources/solution_2.csv");
+//        FileIO.deleteFile("src/main/resources/solution_3.csv");
     }
 
     @Test

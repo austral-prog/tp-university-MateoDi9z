@@ -2,7 +2,6 @@ package com.university.models.Course;
 
 import com.university.Entity;
 import com.university.models.Course.Evaluation.Evaluation;
-import com.university.models.Entities;
 import com.university.models.Professor;
 import com.university.models.Student;
 
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Course implements Entity {
-    private Integer id;
+    private Integer id;             // UNIQUE
     private Integer classroom;
     private String subject;
     private Professor professor;
@@ -42,6 +41,13 @@ public class Course implements Entity {
     public Professor getProfessor() { return professor; }
     public List<Evaluation> getEvaluations() { return evaluations; }
     public Student getStudent() { return student; }
+
+    public Evaluation getFinalExam() {
+        return evaluations
+            .stream()
+            .filter(evaluation -> evaluation.getName() == "Examen Final")
+            .findFirst().orElse(null);
+    }
 
     // Setters
     public void setClassroom(Integer classroom) { this.classroom = classroom; }

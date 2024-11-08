@@ -1,9 +1,6 @@
 package com.university.models;
 
 import com.university.models.Course.Course;
-import com.university.models.Course.Evaluation.*;
-import com.university.models.Course.Exercise;
-import com.university.utils.Row2;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,24 +55,24 @@ public class University {
     }
 
     // ---------- Creators ----------
-    private Student addStudent(String studentName) {
-        Student student = getStudent(studentName);
-        if (student == null) {
-            student = new Student(studentName);
-            students.add(student);
-        }
-        return student;
-    }
+//    private Student addStudent(String studentName) {
+//        Student student = getStudent(studentName);
+//        if (student == null) {
+//            student = new Student(studentName);
+//            students.add(student);
+//        }
+//        return student;
+//    }
 
-    private Course addCourse(String subject, Student student) {
-        Course course = getCourse(subject, student);
-        if (course == null) {
-            course = new Course(subject, student);
-            courses.add(course);
-            student.addCourse(course);
-        }
-        return course;
-    }
+//    private Course addCourse(String subject, Student student) {
+//        Course course = getCourse(subject, student);
+//        if (course == null) {
+//            course = new Course(subject, student);
+//            courses.add(course);
+//            student.addCourse(course);
+//        }
+//        return course;
+//    }
 
     /**
      * (Classroom,Subject,Student_Name,Student_Email,Subject_Teacher)
@@ -83,116 +80,43 @@ public class University {
      * creates instances if not exists.
      * @param row String with data
      */
-    public void registerRow1(String row) {
-        String[] data = row.split(",");
-
-        Integer classroom = Integer.parseInt(data[0]);
-
-        String subject = data[1],
-                studentName = data[2],
-                studentEmail = data[3],
-                professorName = data[4];
-
-        Student student = new Student(studentName, studentEmail);
-        Professor professor = this.createProfessor(new Professor(professorName));
-        Course course = this.createCourse(new Course(classroom, subject, student, professor));
-        this.createStudentOrAddCourse(student, course);
-    }
-
-    /**
-     * (Student,Subject,Evaluation_Type,Evaluation_Name,Exercise_Name,Grade)
-     * Receives a String containing register the Course that a Student has and
-     * creates instances if not exists.
-     * @param row String with data
-     */
-    public void registerRow2(String row) {
-        Row2 data = new Row2(row);
-
-        Student student = addStudent(data.studentName);
-        Course course = addCourse(data.subject, student);
-
-        EvaluationType evaluationType = data.getEvaluationType();
-
-        String evaluationName = data.evaluationName;
-        String subject = data.subject;
-
-        boolean found = false;
-        Evaluation evaluation;
-
-        switch (evaluationType) {
-            case ORAL_EXAM -> evaluation = new OralExam(evaluationName);
-            case FINAL_PRACTICAL_WORK -> evaluation = new FinalPracticalWork(evaluationName);
-            case PRACTICAL_WORK -> evaluation = new PracticalWork(evaluationName);
-            case WRITTEN_EXAM -> evaluation = new WrittenExam(evaluationName);
-            default -> {
-                return;
-            }
-        }
-
-        for (Evaluation e : course.getEvaluations()) {
-            if (e.equals(evaluation) && course.getSubject().equals(subject)) {
-                evaluation = e;
-                found = true;
-                break;
-            }
-        }
-
-        evaluation.addExercise(new Exercise(data.exerciseName, data.grade));
-
-        if (found) return;
-        course.addEvaluation(evaluation);
-    }
-
-    /**
-     * Returns a List of the students and courseCount in alphabetic order.
-     * @return List["Name,CourseCount"]
-     */
-    public List<String> getStudentsAsString() {
-        List<String> result = new ArrayList<>();
-        for (Student student : this.students) {
-            result.add(student.toString());
-        }
-        Collections.sort(result);
-        return result;
-    }
-
-    public List<String> getGradesList() {
-        List<String> result = new ArrayList<>();
-
-        for (Student student : this.students) {
-            for (Course course : student.getCourses()) {
-                result.addAll(course.Serialize(student.getName()));
-            }
-        }
-
-        Collections.sort(result);
-        return result;
-    }
+//    public void registerRow1(String row) {
+//        String[] data = row.split(",");
+//
+//        Integer classroom = Integer.parseInt(data[0]);
+//
+//        Input1 input1 = new Input1(data);
+//
+//        Student student = new Student(studentName, studentEmail);
+//        Professor professor = this.createProfessor(new Professor(professorName));
+//        Course course = this.createCourse(new Course(classroom, subject, student, professor));
+//        this.createStudentOrAddCourse(student, course);
+//    }
 
     // Methods
-    public Student createStudentOrAddCourse(Student student, Course course) {
-        int idx = students.indexOf(student);
-
-        // Check if already exists
-        if (idx >= 0) {
-            students.get(idx).addCourse(course);
-            return students.get(idx);
-        }
-
-        students.add(student);                  // Add student to list
-        idx = students.indexOf(student);        // Get index
-        students.get(idx).addCourse(course);    // Add Course
-
-        return students.get(idx);
-    }
-
-    public Professor createProfessor(Professor professor) {
-        if (!professors.contains(professor)) professors.add(professor);
-        return professor;
-    }
-
-    public Course createCourse(Course course) {
-        if (!courses.contains(course)) courses.add(course);
-        return course;
-    }
+//    public Student createStudentOrAddCourse(Student student, Course course) {
+//        int idx = students.indexOf(student);
+//
+//        // Check if already exists
+//        if (idx >= 0) {
+//            students.get(idx).addCourse(course);
+//            return students.get(idx);
+//        }
+//
+//        students.add(student);                  // Add student to list
+//        idx = students.indexOf(student);        // Get index
+//        students.get(idx).addCourse(course);    // Add Course
+//
+//        return students.get(idx);
+//    }
+//
+//    public Professor createProfessor(Professor professor) {
+//        if (!professors.contains(professor)) professors.add(professor);
+//        return professor;
+//    }
+//
+//    public Course createCourse(Course course) {
+//        if (!courses.contains(course)) courses.add(course);
+//        return course;
+//    }
 }

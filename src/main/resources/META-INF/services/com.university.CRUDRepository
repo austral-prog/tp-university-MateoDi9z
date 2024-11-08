@@ -1,1 +1,5 @@
 com.university.controllers.StudentController
+com.university.controllers.CriteriaController
+com.university.controllers.ExerciseController
+com.university.controllers.CourseController
+com.university.controllers.ProfessorController

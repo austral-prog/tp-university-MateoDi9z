@@ -31,7 +31,7 @@ public class FileIO {
     public String getInputFilePath() { return inputFiles.get(actualInputFilepathIdx); }
 
     // Pre-made
-    public List<String> readInputFile() { return readFile(this.inputFiles.get(actualInputFilepathIdx)); }
+    public List<String> readInputFile() { return readFile(this.getInputFilePath()); }
 
     public void setFiles(Integer version) {
         if (version <= 0 || version > 3) return;

@@ -3,8 +3,8 @@ package com.university.models.Course;
 import com.university.Entity;
 
 public class Exercise implements Entity {
-    private Integer id;
-    private String name;
+    private Integer id;     // UNIQUE
+    private String name;    // UNIQUE
     private Integer grade;
 
     private static int idCounter = 0;
